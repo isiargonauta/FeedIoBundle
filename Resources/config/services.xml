@@ -5,7 +5,11 @@
            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
     <parameters>
-        <parameter key="debril.parser.rss.class">Debril\RssAtomBundle\Protocol\Parser\RssParser</parameter>
+        <parameter key="psr.log.null_logger.class">Psr\Log\NullLogger</parameter>
+        <parameter key="feedio.datetime_builder.class">FeedIo\Rule\DateTimeBuilder</parameter>
+        <parameter key="feedio.parser.class">FeedIo\Parser</parameter>
+        <parameter key="feedio.standard.rss.class">FeedIo\Standard\Rss</parameter>
+        <parameter key="feedio.standard.atom.class">FeedIo\Standard\Atom</parameter>
         <parameter key="debril.parser.rdf.class">Debril\RssAtomBundle\Protocol\Parser\RdfParser</parameter>
         <parameter key="debril.parser.atom.class">Debril\RssAtomBundle\Protocol\Parser\AtomParser</parameter>
         <parameter key="debril.parser.factory.class">Debril\RssAtomBundle\Protocol\Parser\Factory</parameter>
@@ -20,10 +24,18 @@
         <parameter key="debril.provider.doctrine.class">Debril\RssAtomBundle\Provider\DoctrineFeedContentProvider</parameter>
     </parameters>
     <services>
-        <service id="debril.parser.rss" class="%debril.parser.rss.class%">
-            <call method="setDateFormats">
-                <argument>%debril_rss_atom.date_formats%</argument>
-            </call>
+
+        <service id="psr.logger.null" class="%psr.log.null_logger.class%"/>
+
+        <service id="feedio.datetime_builder" class="%feedio.datetime_builder.class%"/>
+
+        <service id="feedio.standard.rss" class="%feedio.standard.rss.class%">
+            <argument type="service" id="feedio.datetime_builder"/>
+        </service>
+
+        <service id="feedio.parser.rss" class="%feedio.parser.class%">
+            <argument type="service" id="feedio.standard.rss"/>
+            <argument type="service" id="logger"/>
         </service>
         <service id="debril.parser.rdf" class="%debril.parser.rdf.class%">
             <call method="setDateFormats">
@@ -49,9 +61,7 @@
         <service id="debril.reader" class="%debril.reader.class%">
             <argument type="service" id="debril.http.curl"/>
             <argument type="service" id="debril.parser.factory"/>
-            <call method="addParser">
-                <argument type="service" id="debril.parser.rss" />
-            </call>
+
             <call method="addParser">
                 <argument type="service" id="debril.parser.rdf" />
             </call>
