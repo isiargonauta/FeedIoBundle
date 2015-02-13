@@ -4,6 +4,7 @@ namespace Debril\RssAtomBundle\DependencyInjection;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;
+use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 use Symfony\Component\DependencyInjection\Loader;
 
@@ -20,6 +21,7 @@ class DebrilRssAtomExtension extends Extension
      */
     public function load(array $configs, ContainerBuilder $container)
     {
+        $this->setLogger($container);
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
 
@@ -43,6 +45,19 @@ class DebrilRssAtomExtension extends Extension
                     'debril_rss_atom.date_formats', array_merge($default, $config['date_formats'])
             );
         }
+    }
+
+    /**
+     * @param ContainerBuilder $container
+     * @return $this
+     */
+    protected function setLogger(ContainerBuilder $container)
+    {
+        if ( ! $container->hasDefinition('logger') && ! $container->hasAlias('logger')) {
+            $container->setDefinition('logger', new Definition('Psr\Log\NullLogger'));
+        }
+
+        return $this;
     }
 
 }
