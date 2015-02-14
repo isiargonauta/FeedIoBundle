@@ -5,7 +5,6 @@ namespace Debril\RssAtomBundle\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\OptionsResolver\Options;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Debril\RssAtomBundle\Provider\FeedContentProvider;
@@ -49,7 +48,7 @@ class StreamController extends Controller
      * Extract the 'If-Modified-Since' value from the headers
      * @return \DateTime
      */
-    public function getModifiedSince()
+    protected function getModifiedSince()
     {
         if (is_null($this->since)) {
             if ($this->getRequest()->headers->has('If-Modified-Since')) {
@@ -75,7 +74,7 @@ class StreamController extends Controller
      * @return Response
      * @throws \Exception
      */
-    public function createStreamResponse(array $options, $format, $source = self::DEFAULT_SOURCE)
+    protected function createStreamResponse(array $options, $format, $source = self::DEFAULT_SOURCE)
     {
         $content = $this->getContent($options, $source);
 
