@@ -1,5 +1,5 @@
 {
-    "name": "debril/rss-atom-bundle",
+    "name": "debril/FeedIoBundle",
     "type": "symfony-bundle",
     "description": "RSS and Atom support for Symfony 2",
     "keywords": ["rss", "atom"],
@@ -7,7 +7,7 @@
     "repositories": [
         {
             "type": "vcs",
-            "url": "https://github.com/alexdebril/rss-atom-bundle.git"
+            "url": "https://github.com/alexdebril/FeedIoBundle.git"
         }
     ],
     "require": {
@@ -28,7 +28,7 @@
     },
     "autoload": {
         "psr-0": {
-            "Debril\\RssAtomBundle": ""
+            "Debril\\FeedIoBundle": ""
         }
     },
     "target-dir": "Debril/RssAtomBundle",
