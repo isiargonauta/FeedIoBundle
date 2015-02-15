@@ -14,7 +14,7 @@
 
 namespace Debril\FeedIoBundle\Provider;
 
-interface FeedContentProvider
+interface FeedProviderInterface
 {
 
     /**

@@ -14,7 +14,7 @@ class AppKernel extends Kernel
             // Dependencies
             new Symfony\Bundle\FrameworkBundle\FrameworkBundle(),
             // My Bundle to test
-            new Debril\RssAtomBundle\DebrilRssAtomBundle(),
+            new Debril\FeedIoBundle\DebrilFeedIoBundle(),
         );
 
         return $bundles;
