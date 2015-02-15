@@ -1,62 +1,58 @@
 <?php
 
 /**
- * RssAtomBundle
+ * FeedIoBundle
  *
- * @package RssAtomBundle/Provider
+ * @package FeedIoBundle/Provider
  *
  * @license http://opensource.org/licenses/lgpl-3.0.html LGPL
- * @copyright (c) 2013, Alexandre Debril
+ * @copyright (c) 2015, Alexandre Debril
  *
- * creation date : 31 mars 2013
+ * creation date : 2013 / 03 / 31
+ * fork date : 2015 / 02 / 15
  *
  */
 
 namespace Debril\FeedIoBundle\Provider;
 
-use Debril\RssAtomBundle\Protocol\Parser\FeedContent;
-use Debril\RssAtomBundle\Protocol\Parser\Item;
-use Debril\RssAtomBundle\Exception\FeedNotFoundException;
+use FeedIo\Feed;
+use FeedIo\Feed\Item;
 
-class MockProvider implements FeedContentProvider
+class MockProvider implements FeedProviderInterface
 {
 
     /**
      * @param  array                 $options
-     * @return FeedContent
+     * @return Feed
      * @throws FeedNotFoundException
      */
     public function getFeedContent(array $options)
     {
-        $content = new FeedContent();
+        $feed = new Feed();
 
         $id = array_key_exists('id', $options) ? $options['id'] : null;
 
         if ($id === 'not-found')
-            throw new FeedNotFoundException();
+            throw new \InvalidArgumentException();
 
-        $content->setPublicId($id);
+        $feed->setPublicId($id);
 
-        $content->setTitle('thank you for using RssAtomBundle');
-        $content->setDescription('this is the mock FeedContent');
-        $content->setLink('https://raw.github.com/alexdebril/rss-atom-bundle/');
-        $content->setLastModified(new \DateTime());
+        $feed->setTitle('thank you for using RssAtomBundle');
+        $feed->setDescription('this is the mock FeedContent');
+        $feed->setLink('https://raw.github.com/alexdebril/rss-atom-bundle/');
+        $feed->setLastModified(new \DateTime());
 
         $item = new Item();
 
         $item->setPublicId('1');
         $item->setLink('https://raw.github.com/alexdebril/rss-atom-bundle/somelink');
         $item->setTitle('This is an item');
-        $item->setSummary('this stream was generated using the MockProvider class');
-        $item->setDescription('lorem ipsum ....');
-        $item->setUpdated(new \DateTime());
-        $item->setComment('http://example.com/comments');
+        $item->setDescription('this stream was generated using the MockProvider class');
+        $item->setLastModified(new \DateTime());
 
-        $item->setAuthor('Contributor');
+        $feed->add($item);
 
-        $content->addItem($item);
-
-        return $content;
+        return $feed;
     }
 
 }
