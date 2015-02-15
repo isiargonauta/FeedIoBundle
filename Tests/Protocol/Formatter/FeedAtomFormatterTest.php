@@ -1,6 +1,6 @@
 <?php
 
-namespace Debril\RssAtomBundle\Protocol\Formatter;
+namespace Debril\FeedIoBundle\Protocol\Formatter;
 
 use Debril\RssAtomBundle\Tests\Protocol\FormatterAbstract;
 

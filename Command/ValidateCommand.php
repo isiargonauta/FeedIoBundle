@@ -10,7 +10,7 @@
  *
  */
 
-namespace Debril\RssAtomBundle\Command;
+namespace Debril\FeedIoBundle\Command;
 
 use FeedIo\Reader;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;

@@ -12,7 +12,7 @@
  *
  */
 
-namespace Debril\RssAtomBundle\Provider;
+namespace Debril\FeedIoBundle\Provider;
 
 interface FeedContentProvider
 {

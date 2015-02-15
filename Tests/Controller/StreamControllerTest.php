@@ -1,6 +1,6 @@
 <?php
 
-namespace Debril\RssAtomBundle\Tests\Controller;
+namespace Debril\FeedIoBundle\Tests\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 

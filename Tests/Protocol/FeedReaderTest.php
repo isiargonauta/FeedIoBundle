@@ -1,6 +1,6 @@
 <?php
 
-namespace Debril\RssAtomBundle\Protocol;
+namespace Debril\FeedIoBundle\Protocol;
 use Debril\RssAtomBundle\Protocol\Parser\FeedContent;
 
 /**

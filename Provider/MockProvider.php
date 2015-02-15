@@ -12,7 +12,7 @@
  *
  */
 
-namespace Debril\RssAtomBundle\Provider;
+namespace Debril\FeedIoBundle\Provider;
 
 use Debril\RssAtomBundle\Protocol\Parser\FeedContent;
 use Debril\RssAtomBundle\Protocol\Parser\Item;

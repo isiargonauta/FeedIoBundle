@@ -1,6 +1,6 @@
 <?php
 
-namespace Debril\RssAtomBundle\DependencyInjection;
+namespace Debril\FeedIoBundle\DependencyInjection;
 
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;

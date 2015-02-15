@@ -6,7 +6,7 @@
  * Time: 23:56
  */
 
-namespace Debril\RssAtomBundle\Tests\Protocol;
+namespace Debril\FeedIoBundle\Tests\Protocol;
 
 class ParserAbstract extends \PHPUnit_Framework_TestCase
 {

@@ -10,7 +10,7 @@
  *
  */
 
-namespace Debril\RssAtomBundle\Provider;
+namespace Debril\FeedIoBundle\Provider;
 
 use \Symfony\Component\OptionsResolver\Options;
 use \Doctrine\Bundle\DoctrineBundle\Registry;

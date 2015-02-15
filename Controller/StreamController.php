@@ -1,6 +1,6 @@
 <?php
 
-namespace Debril\RssAtomBundle\Controller;
+namespace Debril\FeedIoBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;

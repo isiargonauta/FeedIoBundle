@@ -6,7 +6,7 @@
  * Time: 23:44
  */
 
-namespace Debril\RssAtomBundle\Tests\Protocol;
+namespace Debril\FeedIoBundle\Tests\Protocol;
 
 use \Debril\RssAtomBundle\Protocol\Parser\FeedContent;
 use \Debril\RssAtomBundle\Protocol\Parser\Item;

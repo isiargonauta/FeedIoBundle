@@ -1,6 +1,6 @@
 <?php
 
-namespace Debril\RssAtomBundle\DependencyInjection;
+namespace Debril\FeedIoBundle\DependencyInjection;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;
