@@ -31,7 +31,7 @@
             "Debril\\FeedIoBundle": ""
         }
     },
-    "target-dir": "Debril/RssAtomBundle",
+    "target-dir": "Debril/FeedIoBundle",
     "config": {
         "bin-dir": "bin"
     }
