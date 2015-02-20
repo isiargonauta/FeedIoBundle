@@ -1,9 +1,9 @@
 <?php
 
 /**
- * RssAtomBundle
+ * FeedIoBundle
  *
- * @package RssAtomBundle/Command
+ * @package FeedIoBundle/Command
  *
  * @license http://opensource.org/licenses/lgpl-3.0.html LGPL
  * @copyright (c) 2015, Alexandre Debril
