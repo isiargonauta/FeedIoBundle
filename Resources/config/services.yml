@@ -1,0 +1,14 @@
+parameters:
+    foo: bar
+    
+services:
+    guzzle.client:
+        class: GuzzleHttp\Client
+    
+    feedio.client:
+        class: FeedIo\Adapter\Guzzle\Client
+        arguments: ["@guzzle.client"]
+
+    feedio:
+        class: FeedIo\FeedIo
+        arguments: ["@feedio.client", "@logger"]
