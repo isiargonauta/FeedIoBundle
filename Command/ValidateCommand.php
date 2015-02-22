@@ -13,20 +13,17 @@
 namespace Debril\FeedIoBundle\Command;
 
 use FeedIo\Reader;
-use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use \Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class ValidateCommand extends ContainerAwareCommand
+class ValidateCommand extends FeedIoCommandAbstract
 {
-
-    private $container;
 
     protected function configure()
     {
         $this
-            ->setName('rss-atom:validate')
+            ->setName('feed-io:validate')
             ->setDescription('validate a news feed')
             ->addArgument(
                 'url',
@@ -39,11 +36,17 @@ class ValidateCommand extends ContainerAwareCommand
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $url = $input->getArgument('url');
-        $text = "will fetch {$url}";
+        $feedIo = $this->getFeedIo();
 
-        $parser = $this->getContainer()->get('feedio.parser.rss');
-        var_dump($parser);
-        $output->writeln($text);
+        $output->writeln("fetching {$url}");
+
+        try {
+            $result = $feedIo->read($url);
+            $output->writeln("no warning for {$result->getFeed()->getTitle()}");
+        } catch (\Exception $e) {
+            $output->writeln("issues detected : {$e->getMessage()}");
+        }
+
     }
 
 }
