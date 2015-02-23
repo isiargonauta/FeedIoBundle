@@ -14,9 +14,7 @@ namespace Debril\FeedIoBundle\Adapter;
 
 use \Doctrine\Bundle\DoctrineBundle\Registry;
 use \FeedIo\FeedInterface;
-/**
- * @codeCoverageIgnore
- */
+
 class DoctrineFeedContentProvider implements StorageInterface
 {
 
@@ -87,7 +85,11 @@ class DoctrineFeedContentProvider implements StorageInterface
      */
     public function save(FeedInterface $feed)
     {
-        // TODO: Implement save() method.
+        $manager = $this->getDoctrine()->getManager();
+        $manager->persist($feed);
+        $manager->flush();
+
+        return $this;
     }
 
     /**
