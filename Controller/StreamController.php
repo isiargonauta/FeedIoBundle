@@ -1,14 +1,24 @@
 <?php
 
+/**
+ * FeedIoBundle
+ *
+ * @package FeedIoBundle/Controller
+ *
+ * @license http://opensource.org/licenses/lgpl-3.0.html LGPL
+ * @copyright (c) 2015, Alexandre Debril
+ *
+ */
+
 namespace Debril\FeedIoBundle\Controller;
 
+use Debril\FeedIoBundle\Adapter\FeedNotFoundException;
+use Debril\FeedIoBundle\Adapter\StorageInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Debril\RssAtomBundle\Provider\FeedContentProvider;
-use Debril\RssAtomBundle\Exception\FeedNotFoundException;
 
 class StreamController extends Controller
 {
@@ -16,7 +26,7 @@ class StreamController extends Controller
     /**
      * default provider
      */
-    const DEFAULT_SOURCE = 'debril.provider.default';
+    const DEFAULT_SOURCE = 'feedio.storage';
 
     /**
      * parameter used to force refresh at every hit (skips 'If-Modified-Since' usage).
@@ -31,36 +41,38 @@ class StreamController extends Controller
     protected $since;
 
     /**
-     * @Route("/stream/{id}")
      * @Template()
+     * @Route("/stream/{id}")
+     * @param Request $request
+     * @return Response
      */
     public function indexAction(Request $request)
     {
-        $options = $request->attributes->get('_route_params');
-        $options['Since'] = $this->getModifiedSince();
+        $this->since = $this->getModifiedSince($request);
 
         return $this->createStreamResponse(
-                        $options, $request->get('format', 'rss'), $request->get('source', self::DEFAULT_SOURCE)
+                        $request->get('id'),
+                        $request->get('format', 'rss'),
+                        $request->get('source', self::DEFAULT_SOURCE)
         );
     }
 
     /**
      * Extract the 'If-Modified-Since' value from the headers
+     * @param Request $request
      * @return \DateTime
      */
-    protected function getModifiedSince()
+    protected function getModifiedSince(Request $request)
     {
-        if (is_null($this->since)) {
-            if ($this->getRequest()->headers->has('If-Modified-Since')) {
-                $string = $this->getRequest()->headers->get('If-Modified-Since');
-                $this->since = \DateTime::createFromFormat(\DateTime::RSS, $string);
-            } else {
-                $this->since = new \DateTime();
-                $this->since->setTimestamp(1);
-            }
+        if ($request->headers->has('If-Modified-Since')) {
+            $string = $request->headers->get('If-Modified-Since');
+            $since = \DateTime::createFromFormat(\DateTime::RSS, $string);
+        } else {
+            $since = new \DateTime();
+            $since->setTimestamp(1);
         }
 
-        return $this->since;
+        return $since;
     }
 
     /**
@@ -68,19 +80,18 @@ class StreamController extends Controller
      * 200 : a full body containing the stream
      * 304 : Not modified
      *
-     * @param  array      $options
+     * @param $id
      * @param $format
-     * @param  string     $source
+     * @param string $source
      * @return Response
      * @throws \Exception
      */
-    protected function createStreamResponse(array $options, $format, $source = self::DEFAULT_SOURCE)
+    protected function createStreamResponse($id, $format, $source = self::DEFAULT_SOURCE)
     {
-        $content = $this->getContent($options, $source);
+        $content = $this->getContent($id, $source);
 
-        if ($this->mustForceRefresh() || $content->getLastModified() > $this->getModifiedSince()) {
-            $formatter = $this->getFormatter($format);
-            $response = new Response($formatter->toString($content));
+        if ($this->mustForceRefresh() || $content->getLastModified() > $this->since) {
+            $response = new Response($this->getFeedIo()->format($content, $format)->saveXML());
             $response->headers->set('Content-Type', 'application/xhtml+xml');
 
             $response->setPublic();
@@ -99,23 +110,23 @@ class StreamController extends Controller
      * The FeedContentProvider instance is provided as a service
      * default : debril.provider.service
      *
-     * @param  \Symfony\Component\OptionsResolver\Options $options
+     * @param  mixed                                      $id
      * @param  string                                     $source
-     * @return \Debril\RssAtomBundle\Protocol\FeedOut
+     * @return \FeedIo\Feed
      * @throws \Exception
      */
-    protected function getContent(array $options, $source)
+    protected function getContent($id, $source)
     {
-        $provider = $this->get($source);
+        $storage = $this->get($source);
 
-        if (!$provider instanceof FeedContentProvider) {
-            throw new \Exception('Provider is not a FeedContentProvider instance');
+        if ( !$storage instanceof StorageInterface ) {
+            throw new \Exception('Storage is not a StorageInterface instance');
         }
 
         try {
-            return $provider->getFeedContent($options);
+            return $storage->getFeed($id);
         } catch (FeedNotFoundException $e) {
-            throw $this->createNotFoundException('feed not found');
+            throw $this->createNotFoundException("feed {$id} not found");
         }
     }
 
@@ -133,23 +144,11 @@ class StreamController extends Controller
     }
 
     /**
-     * Get the accurate formatter
-     *
-     * @param  string                                       $format
-     * @throws \Exception
-     * @return \Debril\RssAtomBundle\Protocol\FeedFormatter
+     * @return \FeedIo\FeedIo
      */
-    protected function getFormatter($format)
+    protected function getFeedIo()
     {
-        $services = array(
-            'rss' => 'debril.formatter.rss',
-            'atom' => 'debril.formatter.atom',
-        );
-
-        if (!array_key_exists($format, $services))
-            throw new \Exception("Unsupported format {$format}");
-
-        return $this->get($services[$format]);
+        return $this->get('feedio');
     }
 
 }
