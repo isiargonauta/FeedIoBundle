@@ -13,6 +13,7 @@
 namespace Debril\FeedIoBundle\Command;
 
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+use \Debril\FeedIoBundle\Adapter\StorageInterface;
 
 class FeedIoCommandAbstract extends ContainerAwareCommand
 {
@@ -20,9 +21,23 @@ class FeedIoCommandAbstract extends ContainerAwareCommand
     /**
      * @return \FeedIo\FeedIo
      */
-    protected function getFeedIo()
+    public function getFeedIo()
     {
         return $this->getContainer()->get('feedio');
+    }
+
+    /**
+     * @return \Debril\FeedIoBundle\Adapter\StorageInterface
+     * @throws \InvalidArgumentException
+     */
+    public function getStorage()
+    {
+        $storage = $this->getContainer()->get('feedio.storage');
+        if( ! $storage instanceof StorageInterface ) {
+            throw new \InvalidArgumentException("feedio.storage is not a StorageInterface : " . get_class($storage));
+        }
+
+        return $storage;
     }
 
 }
