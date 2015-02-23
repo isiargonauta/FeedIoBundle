@@ -24,29 +24,10 @@ class DebrilFeedIoExtension extends Extension
         $this->setDefinition($container, 'logger', 'Psr\Log\NullLogger');
         $this->setDefinition($container, 'feedio.storage', 'Debril\FeedIoBundle\Adapter\MockStorage');
         $configuration = new Configuration();
-        $config = $this->processConfiguration($configuration, $configs);
+        $this->processConfiguration($configuration, $configs);
 
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
         $loader->load('services.yml');
-
-        $default = array(
-            \DateTime::RFC3339,
-            \DateTime::RSS,
-            \DateTime::W3C,
-            'Y-m-d\TH:i:s.uP',
-            'Y-m-d',
-            'd/m/Y'
-        );
-
-        if (!isset($config['date_formats'])) {
-            $container->setParameter(
-                    'debril_rss_atom.date_formats', $default
-            );
-        } else {
-            $container->setParameter(
-                    'debril_rss_atom.date_formats', array_merge($default, $config['date_formats'])
-            );
-        }
     }
 
     /**
