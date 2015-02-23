@@ -32,7 +32,7 @@ class MockProviderTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Debril\RssAtomBundle\Provider\MockProvider::getFeedContent
+     * @covers Debril\FeedIoBundle\Provider\MockProvider::getFeedContent
      */
     public function testGetContent()
     {
@@ -43,7 +43,7 @@ class MockProviderTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Debril\RssAtomBundle\Provider\MockProvider::getFeedContent
+     * @covers Debril\FeedIoBundle\Provider\MockProvider::getFeedContent
      * @expectedException \InvalidArgumentException
      */
     public function testGet404()
