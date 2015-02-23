@@ -21,7 +21,8 @@ class DebrilFeedIoExtension extends Extension
      */
     public function load(array $configs, ContainerBuilder $container)
     {
-        $this->setLogger($container);
+        $this->setDefinition($container, 'logger', 'Psr\Log\NullLogger');
+        $this->setDefinition($container, 'feedio.storage', 'Debril\FeedIoBundle\Adapter\MockStorage');
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
 
@@ -50,12 +51,14 @@ class DebrilFeedIoExtension extends Extension
 
     /**
      * @param ContainerBuilder $container
+     * @param $serviceName
+     * @param $className
      * @return $this
      */
-    protected function setLogger(ContainerBuilder $container)
+    protected function setDefinition(ContainerBuilder $container, $serviceName, $className)
     {
-        if ( ! $container->hasDefinition('logger') && ! $container->hasAlias('logger')) {
-            $container->setDefinition('logger', new Definition('Psr\Log\NullLogger'));
+        if ( ! $container->hasDefinition($serviceName) && ! $container->hasAlias($serviceName)) {
+            $container->setDefinition($serviceName, new Definition($className));
         }
 
         return $this;
