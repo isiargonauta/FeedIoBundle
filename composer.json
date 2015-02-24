@@ -1,5 +1,5 @@
 {
-    "name": "debril/FeedIoBundle",
+    "name": "debril/feedio-bundle",
     "type": "symfony-bundle",
     "description": "RSS and Atom support for Symfony 2",
     "keywords": ["rss", "atom"],
@@ -22,6 +22,7 @@
         "doctrine/common": "~2.3",
         "doctrine/doctrine-bundle": "dev-master",
         "symfony/framework-bundle": "~2.6",
+        "symfony/process": "~2.6",
         "symfony/validator": "~2.6",
         "symfony/finder": "~2.6",
         "symfony/form": "~2.6",
