@@ -1,8 +1,8 @@
 <?php
 /**
- * Rss/Atom Bundle for Symfony 2
+ * FeedIo Bundle for Symfony 2
  *
- * @package RssAtomBundle\Tests
+ * @package FeedIoBundle\Tests
  *
  * @license http://opensource.org/licenses/lgpl-3.0.html LGPL
  * @copyright (c) 2013, Alexandre Debril
@@ -22,7 +22,7 @@ $autoload = require $file;
 \Doctrine\Common\Annotations\AnnotationRegistry::registerLoader(array($autoload, 'loadClass'));
 
 spl_autoload_register(function ($class) {
-    if (0 === strpos($class, 'Debril\\RssAtomBundle\\')) {
+    if (0 === strpos($class, 'Debril\\FeedIoBundle\\')) {
         $path = __DIR__.'/../'.implode('/', array_slice(explode('\\', $class), 2)).'.php';
         if (!stream_resolve_include_path($path)) {
             return false;

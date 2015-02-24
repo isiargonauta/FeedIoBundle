@@ -17,14 +17,14 @@ use \Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class ValidateCommand extends FeedIoCommandAbstract
+class SaveCommand extends FeedIoCommandAbstract
 {
 
     protected function configure()
     {
         $this
-            ->setName('feed-io:validate')
-            ->setDescription('validate a news feed')
+            ->setName('feed-io:save')
+            ->setDescription('save a news feed into storage')
             ->addArgument(
                 'url',
                 InputArgument::REQUIRED,
@@ -36,13 +36,10 @@ class ValidateCommand extends FeedIoCommandAbstract
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $url = $input->getArgument('url');
-        $feedIo = $this->getFeedIo();
-
-        $output->writeln("fetching {$url}");
 
         try {
-            $result = $feedIo->read($url);
-            $output->writeln("no warning for {$result->getFeed()->getTitle()}");
+            $result = $this->getFeedIo()->read($url);
+            $this->getStorage()->save($result->getFeed());
         } catch (\Exception $e) {
             $output->writeln("issues detected : {$e->getMessage()}");
         }

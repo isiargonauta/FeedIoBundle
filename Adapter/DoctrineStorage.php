@@ -1,26 +1,21 @@
 <?php
 
 /**
- * Feed aggregator for Symfony 2
+ * FeedIoBundle
  *
- * @package FeedAggregatorBundle/Provider
+ * @package FeedIoBundle/Adapter
  *
  * @license http://opensource.org/licenses/lgpl-3.0.html LGPL
- * @copyright (c) 2013, Alexandre Debril
+ * @copyright (c) 2015, Alexandre Debril
  *
  */
 
-namespace Debril\RssAtomBundle\Provider;
+namespace Debril\FeedIoBundle\Adapter;
 
-use \Symfony\Component\OptionsResolver\Options;
 use \Doctrine\Bundle\DoctrineBundle\Registry;
-use \Debril\RssAtomBundle\Exception\FeedNotFoundException;
-use Symfony\Component\OptionsResolver\OptionsResolver;
+use \FeedIo\FeedInterface;
 
-/**
- * @codeCoverageIgnore
- */
-class DoctrineFeedContentProvider implements FeedContentProvider
+class DoctrineFeedContentProvider implements StorageInterface
 {
 
     /**
@@ -53,7 +48,7 @@ class DoctrineFeedContentProvider implements FeedContentProvider
     /**
      * Sets the doctrine's repository name
      * @param  string                                                     $repositoryName
-     * @return \Debril\RssAtomBundle\Provider\DoctrineFeedContentProvider
+     * @return \Debril\FeedIoBundle\Adapter\DoctrineStorage
      */
     public function setRepositoryName($repositoryName)
     {
@@ -63,24 +58,38 @@ class DoctrineFeedContentProvider implements FeedContentProvider
     }
 
     /**
-     * @param  array                                  $options
-     * @return \Debril\RssAtomBundle\Protocol\FeedOut
+     * @param $id
+     * @return \FeedIo\FeedInterface
      * @throws FeedNotFoundException
      */
-    public function getFeedContent(array $options)
+    public function getFeed($id)
     {
         // fetch feed from data repository
         $feed = $this->getDoctrine()
                 ->getManager()
                 ->getRepository($this->getRepositoryName())
-                ->findOneById($this->getIdFromOptions($options));
+                ->findOneById($id);
 
-        // if the feed is an actual FeedOut instance, then return it
-        if ($feed instanceof \Debril\RssAtomBundle\Protocol\FeedOut)
+        // if the feed is an actual FeedInterface instance, then return it
+        if ( $feed instanceof FeedInterface ) {
             return $feed;
+        }
 
         // $feed is null, which means no Feed was found with this id.
         throw new FeedNotFoundException();
+    }
+
+    /**
+     * @param \FeedIo\FeedInterface $feed
+     * @return $this
+     */
+    public function save(FeedInterface $feed)
+    {
+        $manager = $this->getDoctrine()->getManager();
+        $manager->persist($feed);
+        $manager->flush();
+
+        return $this;
     }
 
     /**
@@ -89,20 +98,6 @@ class DoctrineFeedContentProvider implements FeedContentProvider
     public function getDoctrine()
     {
         return $this->doctrine;
-    }
-
-    /**
-     * @param  array $options
-     * @return mixed
-     */
-    public function getIdFromOptions(array $options)
-    {
-        $optionsResolver = new OptionsResolver();
-        $optionsResolver->setRequired('id');
-
-        $options = $optionsResolver->resolve($options);
-
-        return $options['id'];
     }
 
 }
