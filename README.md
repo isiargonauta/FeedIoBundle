@@ -28,6 +28,10 @@ feed-io bundle for the Symfony Framework
 
 Keep informed about new releases and incoming features : http://blog.debril.fr/category/feed-io
 
+## FeedIoBundle history
+
+FeedIoBundle is a fork of [rss-atom-bundle](https://github.com/alexdebril/rss-atom-bundle). The main difference is the integration of feed-io.
+
 # Installation
 
 Edit composer.json and add the following line in the "require" section:

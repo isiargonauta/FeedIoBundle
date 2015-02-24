@@ -10,6 +10,9 @@
             "url": "https://github.com/alexdebril/FeedIoBundle.git"
         }
     ],
+    "replace": {
+        "debril/rss-atom-bundle": "1.*"
+    },
     "require": {
         "php": ">=5.4",
         "symfony/config": "~2.6",
