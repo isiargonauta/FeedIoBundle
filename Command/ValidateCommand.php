@@ -43,8 +43,10 @@ class ValidateCommand extends FeedIoCommandAbstract
         try {
             $result = $feedIo->read($url);
             $output->writeln("no warning for {$result->getFeed()->getTitle()}");
+            return 0;
         } catch (\Exception $e) {
-            $output->writeln("issues detected : {$e->getMessage()}");
+            $output->writeln("issue detected : {$e->getMessage()}");
+            return 1;
         }
 
     }
