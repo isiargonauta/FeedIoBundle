@@ -5,3 +5,5 @@ tools:
 filter:
     excluded_paths:
         - Tests/*
+        - Resources/*
+        - DependencyInjection/*
