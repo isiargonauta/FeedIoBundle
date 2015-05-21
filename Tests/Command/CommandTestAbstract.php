@@ -47,13 +47,20 @@ abstract class CommandTestAbstract extends \PHPUnit_Framework_TestCase
     {
         $container = new Container;
         
-        $feedIo = new FeedIo(
-            new NullClient,
-            new NullLogger
-        );
-        $container->set('feedio', $feedIo);
+        $container->set('feedio', $this->getFeedIoMock());
         
         return $container;
     }
     
+    /**
+     * @return \FeedIo\FeedIo
+     */
+    public function getFeedioMock()
+    {
+        return new \FeedIo\FeedIoMock(
+                new NullClient,
+                new NullLogger
+        );
+  
+    }
 }
