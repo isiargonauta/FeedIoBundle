@@ -18,6 +18,12 @@ use \FeedIo\Feed\Item;
 
 class MockStorage implements StorageInterface
 {
+
+    /**
+     * @var integer
+     */
+    protected $saveCount = 0;
+
     /**
      * @param $id
      * @return \FeedIo\FeedInterface
@@ -56,7 +62,17 @@ class MockStorage implements StorageInterface
      */
     public function save(FeedInterface $feed)
     {
+        $this->saveCount++;
+        
         return $this;
+    }
+
+    /**
+     * @return integer
+     */
+    public function getSaveCount()
+    {
+        return $this->saveCount;
     }
 
 }

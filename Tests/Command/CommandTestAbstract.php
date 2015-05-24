@@ -13,6 +13,7 @@
 namespace Debril\FeedIoBundle\Command;
 
 use Debril\FeedIoBundle\Tests\AppKernel;
+use Debril\FeedIoBundle\Adapter\MockStorage;
 use FeedIo\FeedIo;
 use FeedIo\Adapter\NullClient;
 use \Psr\Log\NullLogger;
@@ -48,6 +49,7 @@ abstract class CommandTestAbstract extends \PHPUnit_Framework_TestCase
         $container = new Container;
         
         $container->set('feedio', $this->getFeedIoMock());
+        $container->set('feedio.storage', new MockStorage);
         
         return $container;
     }
