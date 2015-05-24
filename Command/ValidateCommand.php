@@ -17,7 +17,7 @@ use \Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class ValidateCommand extends FeedIoCommandAbstract
+class ValidateCommand extends FeedIoCommand
 {
 
     protected function configure()
