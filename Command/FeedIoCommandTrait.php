@@ -40,4 +40,9 @@ trait FeedIoCommandTrait
         return $storage;
     }
 
+    /**
+     * @return Container
+     */
+    abstract protected function getContainer();
+
 }
