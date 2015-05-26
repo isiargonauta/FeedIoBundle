@@ -15,7 +15,7 @@ namespace Debril\FeedIoBundle\Adapter;
 use \Doctrine\Bundle\DoctrineBundle\Registry;
 use \FeedIo\FeedInterface;
 
-class DoctrineFeedContentProvider implements StorageInterface
+class DoctrineStorage implements StorageInterface
 {
 
     /**
