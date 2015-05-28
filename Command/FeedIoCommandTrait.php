@@ -12,7 +12,6 @@
 
 namespace Debril\FeedIoBundle\Command;
 
-use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use \Debril\FeedIoBundle\Adapter\StorageInterface;
 
 trait FeedIoCommandTrait
