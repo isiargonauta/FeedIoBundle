@@ -26,7 +26,7 @@ feed-io bundle for the Symfony Framework
 - A generic StorageInterface to handle read/write operations on a data source
 - Commands to save external feeds' content
 
-Keep informed about new releases and incoming features : http://blog.debril.fr/category/feed-io
+Keep informed about new releases and incoming features : http://debril.org/category/feed-io
 
 ## FeedIoBundle history
 
