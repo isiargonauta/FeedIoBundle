@@ -18,7 +18,6 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 class StreamController extends Controller
 {
@@ -41,38 +40,54 @@ class StreamController extends Controller
     protected $since;
 
     /**
-     * @Template()
      * @Route("/stream/{id}")
      * @param Request $request
      * @return Response
      */
     public function indexAction(Request $request)
     {
-        $this->since = $this->getModifiedSince($request);
+        $options = $request->attributes->get('_route_params');
+        $this->setModifiedSince($request);
+        $options['Since'] = $this->getModifiedSince();
 
         return $this->createStreamResponse(
                         $request->get('id'),
-                        $request->get('format', 'rss'),
+                        $request->get('format', 'rss'), 
                         $request->get('source', self::DEFAULT_SOURCE)
         );
     }
 
     /**
-     * Extract the 'If-Modified-Since' value from the headers
-     * @param Request $request
+     * returns the 'If-Modified-Since' header value
+     *
      * @return \DateTime
      */
-    protected function getModifiedSince(Request $request)
+    protected function getModifiedSince()
     {
-        if ($request->headers->has('If-Modified-Since')) {
-            $string = $request->headers->get('If-Modified-Since');
-            $since = \DateTime::createFromFormat(\DateTime::RSS, $string);
-        } else {
-            $since = new \DateTime();
-            $since->setTimestamp(1);
+        if (is_null($this->since)) {
+            $this->since = new \DateTime('@0');
         }
 
-        return $since;
+        return $this->since;
+    }
+
+    /**
+     * Extracts the 'If-Modified-Since' value from the headers.
+     *
+     * @param Request $request
+     * @return $this
+     */
+    protected function setModifiedSince(Request $request)
+    {
+        $this->since = new \DateTime();
+        if ($request->headers->has('If-Modified-Since')) {
+            $string = $request->headers->get('If-Modified-Since');
+            $this->since = \DateTime::createFromFormat(\DateTime::RSS, $string);
+        } else {
+            $this->since->setTimestamp(1);
+        }
+
+        return $this;
     }
 
     /**
@@ -90,7 +105,7 @@ class StreamController extends Controller
     {
         $content = $this->getContent($id, $source);
 
-        if ($this->mustForceRefresh() || $content->getLastModified() > $this->since) {
+        if ($this->mustForceRefresh() || $content->getLastModified() > $this->getModifiedSince()) {
             $response = new Response($this->getFeedIo()->format($content, $format)->saveXML());
             $response->headers->set('Content-Type', 'application/xhtml+xml');
 
