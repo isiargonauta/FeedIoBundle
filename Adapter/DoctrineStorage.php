@@ -13,6 +13,7 @@
 namespace Debril\FeedIoBundle\Adapter;
 
 use \Doctrine\Bundle\DoctrineBundle\Registry;
+use \Debril\FeedIoBundle\Exception\FeedNotFoundException;
 use \FeedIo\FeedInterface;
 
 class DoctrineStorage implements StorageInterface
@@ -76,7 +77,7 @@ class DoctrineStorage implements StorageInterface
         }
 
         // $feed is null, which means no Feed was found with this id.
-        throw new FeedNotFoundException();
+        throw new FeedNotFoundException("feed not found : $id");
     }
 
     /**

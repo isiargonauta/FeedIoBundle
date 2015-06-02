@@ -3,19 +3,18 @@
 /**
  * FeedIoBundle
  *
- * @package FeedIoBundle/Adapter
+ * @package FeedIoBundle/Exception
  *
  * @license http://opensource.org/licenses/lgpl-3.0.html LGPL
  * @copyright (c) 2015, Alexandre Debril
  *
  */
 
-namespace Debril\FeedIoBundle\Adapter;
+namespace Debril\FeedIoBundle\Exception;
 
 
 /**
  * Class FeedNotFoundException
  * Thrown when storage cannot found the requested feed
- * @package Debril\FeedIoBundle\Adapter
  */
-class FeedNotFoundException extends \OutOfBoundsException {}
+class FeedNotFoundException extends FeedIoBundleException {}

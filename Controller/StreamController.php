@@ -13,7 +13,7 @@
 namespace Debril\FeedIoBundle\Controller;
 
 use Debril\FeedIoBundle\Exception\InvalidStorageException;
-use Debril\FeedIoBundle\Adapter\FeedNotFoundException;
+use Debril\FeedIoBundle\Exception\FeedNotFoundException;
 use Debril\FeedIoBundle\Adapter\StorageInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;

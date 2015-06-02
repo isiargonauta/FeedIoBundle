@@ -12,6 +12,7 @@
 
 namespace Debril\FeedIoBundle\Adapter;
 
+use \Debril\FeedIoBundle\Exception\FeedNotFoundException;
 use \FeedIo\FeedInterface;
 use \FeedIo\Feed;
 use \FeedIo\Feed\Item;
