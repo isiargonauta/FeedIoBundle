@@ -45,7 +45,6 @@ class StreamController extends Controller
      */
     public function indexAction(Request $request)
     {
-        $options = $request->attributes->get('_route_params');
         $this->setModifiedSince($request);
 
         return $this->createStreamResponse(
