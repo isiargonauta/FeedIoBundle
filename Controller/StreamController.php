@@ -17,7 +17,7 @@ use Debril\FeedIoBundle\Adapter\StorageInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+
 
 class StreamController extends Controller
 {
@@ -40,7 +40,6 @@ class StreamController extends Controller
     protected $since;
 
     /**
-     * @Route("/stream/{id}")
      * @param Request $request
      * @return Response
      */
@@ -48,7 +47,6 @@ class StreamController extends Controller
     {
         $options = $request->attributes->get('_route_params');
         $this->setModifiedSince($request);
-        $options['Since'] = $this->getModifiedSince();
 
         return $this->createStreamResponse(
                         $request->get('id'),
