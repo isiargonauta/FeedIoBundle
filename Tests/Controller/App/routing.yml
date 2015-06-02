@@ -1,0 +1,12 @@
+feedio_stream:
+    path: /stream/{format}/{id}
+    defaults: { _controller: DebrilFeedIoBundle:Stream:index, format: 'rss' }
+    requirements: { "format": "rss|atom" }
+    
+feedio_mock:
+    path: /mock/rss/{id}
+    defaults: { _controller: DebrilFeedIoBundle:Stream:index, "format": 'rss', "source": "feedio.storage", "id": null }
+    
+feedio_bad_provider:
+    path: /bad/provider
+    defaults: { _controller: DebrilFeedIoBundle:Stream:index, "format": 'rss', "source": "feedio", "id": null }
