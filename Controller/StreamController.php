@@ -12,6 +12,7 @@
 
 namespace Debril\FeedIoBundle\Controller;
 
+use Debril\FeedIoBundle\Exception\InvalidStorageException;
 use Debril\FeedIoBundle\Adapter\FeedNotFoundException;
 use Debril\FeedIoBundle\Adapter\StorageInterface;
 use Symfony\Component\HttpFoundation\Response;
@@ -132,7 +133,7 @@ class StreamController extends Controller
         $storage = $this->get($source);
 
         if ( !$storage instanceof StorageInterface ) {
-            throw new \Exception('Storage is not a StorageInterface instance');
+            throw new InvalidStorageException('Storage is not a StorageInterface instance');
         }
 
         try {

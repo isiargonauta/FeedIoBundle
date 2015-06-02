@@ -45,7 +45,7 @@ class StreamControllerTest extends WebTestCase
     }
 
     /**
-     * @expectedException \Exception
+     * @expectedException Debril\FeedIoBundle\Exception\InvalidStorageException
      */
     public function testBadProvider()
     {
