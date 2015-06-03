@@ -36,14 +36,26 @@ FeedIoBundle is a fork of [rss-atom-bundle](https://github.com/alexdebril/rss-at
 
 Edit composer.json and add the following line in the "require" section:
 
+```yaml
     "debril/feedio-bundle": "dev-master"
 
-then, ask Composer to install it:
+```
 
+Ask Composer to install it:
+
+```bash
     composer.phar update debril/feedio-bundle
-    
-finally, edit your app/AppKernel.php to register the bundle in the registerBundles() method as above:
 
+```
+
+Alternatively, add the dependence using command line :
+
+```bash
+    composer.phar require debril/feedio-bundle
+
+``` 
+
+Now you need to include the bundle into your project's configuration. First, edit your app/AppKernel.php to register the bundle in the registerBundles() method as above:
 
 ```php
 class AppKernel extends Kernel
@@ -56,6 +68,14 @@ class AppKernel extends Kernel
             // ...
             // register the bundle here
             new Debril\FeedIoBundle\DebrilFeedIoBundle(),
+```
+
+Then add the bundle's routing configuration in app/config/routing.yml :
+ 
+```yaml
+feedio:
+    resource: @DebrilFeedIoBundle/Resources/config/routing.yml
+
 ```
 
 # Fetching the repository
@@ -123,8 +143,8 @@ $dom = $feedIo->format($feed, 'atom');
 ----------------
 FeedIoBundle offers the ability to provide RSS/Atom feeds. The route will match the following pattern : /{format}/{id}
 
-- {format} must be "rss" or "atom" (or whatever you want if you add the good routing rule in routing.yml)
-- {contentId} is an optional argument. Use it you have several feeds
+- {format} must be "rss" or "atom" (or whatever you want if you add the according routing rule in routing.yml)
+- {id} is an optional argument. Use it you have several feeds
 
 The request will be handled by `StreamController`, according to the following steps :
 
