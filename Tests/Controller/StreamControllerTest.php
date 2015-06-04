@@ -44,14 +44,4 @@ class StreamControllerTest extends WebTestCase
         $client->request('GET', '/mock/rss/not-found');
     }
 
-    /**
-     * @expectedException Debril\FeedIoBundle\Exception\InvalidStorageException
-     */
-    public function testBadProvider()
-    {
-        $client = static::createClient();
-
-        $client->request('GET', '/bad/provider');
-    }
-
 }
