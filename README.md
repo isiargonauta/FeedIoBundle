@@ -95,7 +95,7 @@ You can run the unit test suites using the following command in the Bundle's sou
 Usage
 =====
 
-feedio-bundle is designed to read feeds across the internet and to publish your own. Its main class is [FeedIo](https://github.com/alexdebril/feed-io/blob/master/src/FeedIo/FeedIo.php) :
+feedio-bundle is designed to read feeds across the internet and to publish your own. Its main class is [FeedIo](https://github.com/alexdebril/feed-io/blob/master/src/FeedIo/FeedIo.php), which is accessible as a service called 'feedio' :
 
 ## reading
 
