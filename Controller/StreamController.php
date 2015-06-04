@@ -12,9 +12,10 @@
 
 namespace Debril\FeedIoBundle\Controller;
 
-use Debril\FeedIoBundle\Exception\InvalidStorageException;
+
 use Debril\FeedIoBundle\Exception\FeedNotFoundException;
-use Debril\FeedIoBundle\Adapter\StorageInterface;
+use Debril\FeedIoBundle\Adapter\StorageInterface;    
+use Debril\FeedIoBundle\DependencyInjection\FeedIoContainerTrait;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -22,6 +23,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 class StreamController extends Controller
 {
+
+    use FeedIoContainerTrait;
 
     /**
      * default provider
@@ -50,8 +53,7 @@ class StreamController extends Controller
 
         return $this->createStreamResponse(
                         $request->get('id'),
-                        $request->get('format', 'rss'), 
-                        $request->get('source', self::DEFAULT_SOURCE)
+                        $request->get('format', 'rss')
         );
     }
 
@@ -95,13 +97,12 @@ class StreamController extends Controller
      *
      * @param $id
      * @param $format
-     * @param string $source
      * @return Response
      * @throws \Exception
      */
-    protected function createStreamResponse($id, $format, $source = self::DEFAULT_SOURCE)
+    protected function createStreamResponse($id, $format)
     {
-        $content = $this->getContent($id, $source);
+        $content = $this->getContent($id);
 
         if ($this->mustForceRefresh() || $content->getLastModified() > $this->getModifiedSince()) {
             $response = new Response($this->getFeedIo()->format($content, $format)->saveXML());
@@ -121,23 +122,16 @@ class StreamController extends Controller
     /**
      * Get the Stream's content using a FeedContentProvider
      * The FeedContentProvider instance is provided as a service
-     * default : debril.provider.service
+     * default : feedio.storage
      *
      * @param  mixed                                      $id
-     * @param  string                                     $source
      * @return \FeedIo\Feed
      * @throws \Exception
      */
-    protected function getContent($id, $source)
+    protected function getContent($id)
     {
-        $storage = $this->get($source);
-
-        if ( !$storage instanceof StorageInterface ) {
-            throw new InvalidStorageException('Storage is not a StorageInterface instance');
-        }
-
         try {
-            return $storage->getFeed($id);
+            return $this->getStorage()->getFeed($id);
         } catch (FeedNotFoundException $e) {
             throw $this->createNotFoundException("feed {$id} not found");
         }
@@ -156,12 +150,10 @@ class StreamController extends Controller
         return false;
     }
 
-    /**
-     * @return \FeedIo\FeedIo
-     */
-    protected function getFeedIo()
+
+    protected function getContainer()
     {
-        return $this->get('feedio');
+        return $this->container;
     }
 
 }

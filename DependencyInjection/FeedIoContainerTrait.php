@@ -3,18 +3,19 @@
 /**
  * FeedIoBundle
  *
- * @package FeedIoBundle/Command
+ * @package FeedIoBundle/DependencyInjection
  *
  * @license http://opensource.org/licenses/lgpl-3.0.html LGPL
  * @copyright (c) 2015, Alexandre Debril
  *
  */
 
-namespace Debril\FeedIoBundle\Command;
+namespace Debril\FeedIoBundle\DependencyInjection;
 
+use Debril\FeedIoBundle\Exception\InvalidStorageException;
 use \Debril\FeedIoBundle\Adapter\StorageInterface;
 
-trait FeedIoCommandTrait
+trait FeedIoContainerTrait
 {
 
     /**
@@ -33,7 +34,7 @@ trait FeedIoCommandTrait
     {
         $storage = $this->getContainer()->get('feedio.storage');
         if( ! $storage instanceof StorageInterface ) {
-            throw new \InvalidArgumentException("feedio.storage is not a StorageInterface : " . get_class($storage));
+            throw new InvalidStorageException("feedio.storage is not a StorageInterface : " . get_class($storage));
         }
 
         return $storage;
