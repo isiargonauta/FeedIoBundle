@@ -27,11 +27,6 @@ class StreamController extends Controller
     use FeedIoContainerTrait;
 
     /**
-     * default provider
-     */
-    const DEFAULT_SOURCE = 'feedio.storage';
-
-    /**
      * parameter used to force refresh at every hit (skips 'If-Modified-Since' usage).
      * set it to true for debug purpose
      */
@@ -106,17 +101,39 @@ class StreamController extends Controller
 
         if ($this->mustForceRefresh() || $feed->getLastModified() > $this->getModifiedSince()) {
             $response = new Response($this->getFeedIo()->format($feed, $format)->saveXML());
-            $response->headers->set('Content-Type', 'application/xhtml+xml');
-
-            $response->setPublic();
-            $response->setMaxAge(3600);
-            $response->setLastModified($feed->getLastModified());
+            $this->setFeedHeaders($response, $feed);
         } else {
             $response = new Response();
             $response->setNotModified();
         }
 
         return $response;
+    }
+
+    /**
+     * @param Response $response
+     * @param Feed $feed
+     * @return $this
+     */
+    protected function setFeedHeaders(Response $response, Feed $feed)
+    {
+        $response->headers->set('Content-Type', 'application/xhtml+xml');
+        if (! $this->isPrivate() ) {
+            $response->setPublic();
+        }
+
+        $response->setMaxAge(3600);
+        $response->setLastModified($feed->getLastModified());
+        
+        return $this;
+    }
+
+    /**
+     * @return boolean true if the feed must be private
+     */
+    protected function isPrivate()
+    {
+        return $this->container->getParameter('feedio.private_feeds');
     }
 
     /**

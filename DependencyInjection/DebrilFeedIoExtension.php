@@ -23,9 +23,24 @@ class DebrilFeedIoExtension extends Extension
     {
         $this->setDefinition($container, 'logger', 'Psr\Log\NullLogger');
         $this->setDefinition($container, 'feedio.storage', 'Debril\FeedIoBundle\Adapter\MockStorage');
-
+        
+        $this->loadConfiguration($configs, $container);
+        
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
         $loader->load('services.yml');
+    }
+
+    /**
+     * @param array $configs
+     * @param  ContainerBuilder $container
+     */
+    protected function loadConfiguration(array $configs, ContainerBuilder $container)
+    {
+        $configuration = new Configuration();
+        $config = $this->processConfiguration($configuration, $configs);
+        $container->setParameter('feedio.private_feeds', $config['private']);
+        
+        return $this;
     }
 
     /**
