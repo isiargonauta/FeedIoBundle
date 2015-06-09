@@ -12,7 +12,7 @@
 
 namespace Debril\FeedIoBundle\Controller;
 
-
+use FeedIo\Feed;
 use Debril\FeedIoBundle\Exception\FeedNotFoundException;
 use Debril\FeedIoBundle\Adapter\StorageInterface;    
 use Debril\FeedIoBundle\DependencyInjection\FeedIoContainerTrait;
@@ -102,15 +102,15 @@ class StreamController extends Controller
      */
     protected function createStreamResponse($id, $format)
     {
-        $content = $this->getContent($id);
+        $feed = $this->getFeed($id);
 
-        if ($this->mustForceRefresh() || $content->getLastModified() > $this->getModifiedSince()) {
-            $response = new Response($this->getFeedIo()->format($content, $format)->saveXML());
+        if ($this->mustForceRefresh() || $feed->getLastModified() > $this->getModifiedSince()) {
+            $response = new Response($this->getFeedIo()->format($feed, $format)->saveXML());
             $response->headers->set('Content-Type', 'application/xhtml+xml');
 
             $response->setPublic();
             $response->setMaxAge(3600);
-            $response->setLastModified($content->getLastModified());
+            $response->setLastModified($feed->getLastModified());
         } else {
             $response = new Response();
             $response->setNotModified();
@@ -124,11 +124,11 @@ class StreamController extends Controller
      * The FeedContentProvider instance is provided as a service
      * default : feedio.storage
      *
-     * @param  mixed                                      $id
-     * @return \FeedIo\Feed
-     * @throws \Exception
+     * @param  mixed     $id
+     * @return Feed
+     * @throws FeedNotFoundException
      */
-    protected function getContent($id)
+    protected function getFeed($id)
     {
         try {
             return $this->getStorage()->getFeed($id);
