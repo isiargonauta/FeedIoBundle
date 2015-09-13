@@ -12,3 +12,7 @@
 $loader = require __DIR__ . "/../vendor/autoload.php";
 $loader->addPsr4('Debril\\FeedIoBundle\\', __DIR__);
 $loader->addPsr4('FeedIo\\', __DIR__);
+
+use Doctrine\Common\Annotations\AnnotationRegistry;
+
+AnnotationRegistry::registerLoader(array($loader, 'loadClass'));

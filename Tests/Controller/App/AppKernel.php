@@ -13,6 +13,8 @@ class AppKernel extends Kernel
         $bundles = array(
             // Dependencies
             new Symfony\Bundle\FrameworkBundle\FrameworkBundle(),
+            new Symfony\Bundle\TwigBundle\TwigBundle(),
+            new Doctrine\Bundle\DoctrineBundle\DoctrineBundle(),
             // My Bundle to test
             new Debril\FeedIoBundle\DebrilFeedIoBundle(),
         );

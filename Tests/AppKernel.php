@@ -3,6 +3,7 @@
 namespace Debril\FeedIoBundle\Tests;
 
 
+use Doctrine\Bundle\DoctrineBundle\DoctrineBundle;
 use Symfony\Component\HttpKernel\Kernel;
 use Symfony\Component\Config\Loader\LoaderInterface;
 
@@ -14,6 +15,7 @@ class AppKernel extends Kernel
         $bundles = array(
             // Dependencies
             new Symfony\Bundle\FrameworkBundle\FrameworkBundle(),
+            new DoctrineBundle(),
             // My Bundle to test
             new Debril\FeedIoBundle\DebrilFeedIoBundle(),
         );

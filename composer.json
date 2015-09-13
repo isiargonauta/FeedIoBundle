@@ -25,12 +25,15 @@
         "phpunit/phpunit": "~4.4",
         "doctrine/common": "~2.3",
         "doctrine/doctrine-bundle": "dev-master",
+        "doctrine/orm": "dev-master",
+        "twig/twig": "~1.18",
         "symfony/framework-bundle": "~2.6",
         "symfony/process": "~2.6",
         "symfony/validator": "~2.6",
         "symfony/finder": "~2.6",
         "symfony/form": "~2.6",
-        "symfony/browser-kit": "~2.6"
+        "symfony/browser-kit": "~2.6",
+        "symfony/twig-bundle": "~2.7"
     },
     "autoload": {
         "psr-0": {

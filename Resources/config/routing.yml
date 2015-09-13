@@ -1,3 +1,7 @@
+debril_feed_io_media:
+    resource: "@DebrilFeedIoBundle/Resources/config/routing/media.yml"
+    prefix:   /media
+
 feedio_stream:
     path: /stream/{format}/{id}
     defaults: { _controller: DebrilFeedIoBundle:Stream:index, format: 'rss' }
