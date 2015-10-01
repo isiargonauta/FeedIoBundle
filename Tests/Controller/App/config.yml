@@ -2,6 +2,8 @@
 framework:
     secret:          secret
     test: ~
+    templating:
+        engines: ['twig']
     router:          { resource: "%kernel.root_dir%/../../../Resources/config/routing.yml" }
     form:            true
     csrf_protection: true
@@ -28,7 +30,4 @@ doctrine:
         naming_strategy: doctrine.orm.naming_strategy.underscore
         auto_mapping: true
 
-framework:
-    test: ~
-    templating:
-        engines: ['twig']
+    
