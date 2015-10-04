@@ -50,21 +50,22 @@ class MediaControllerTest extends WebTestCase
 
         // Fill in the form and submit it
         $form = $crawler->selectButton('Create')->form(array(
-            'debril_feediobundle_media[field_name]'  => 'Test',
-            // ... other fields to fill
+            'debril_feediobundle_media[type]'  => 'audio/mp3',
+            'debril_feediobundle_media[url]'  => 'http://',
+            'debril_feediobundle_media[length]'  => '1234',
         ));
 
         $client->submit($form);
         $crawler = $client->followRedirect();
 
         // Check data in the show view
-        $this->assertGreaterThan(0, $crawler->filter('td:contains("Test")')->count(), 'Missing element td:contains("Test")');
+        $this->assertGreaterThan(0, $crawler->filter('td:contains("audio/mp3")')->count(), 'Missing element td:contains("audio/mp3")');
 
         // Edit the entity
         $crawler = $client->click($crawler->selectLink('Edit')->link());
 
         $form = $crawler->selectButton('Update')->form(array(
-            'debril_feediobundle_media[field_name]'  => 'Foo',
+            'debril_feediobundle_media[type]'  => 'video/mpeg',
             // ... other fields to fill
         ));
 
@@ -72,14 +73,14 @@ class MediaControllerTest extends WebTestCase
         $crawler = $client->followRedirect();
 
         // Check the element contains an attribute with value equals "Foo"
-        $this->assertGreaterThan(0, $crawler->filter('[value="Foo"]')->count(), 'Missing element [value="Foo"]');
+        $this->assertGreaterThan(0, $crawler->filter('[value="video/mpeg"]')->count(), 'Missing element [value="video/mpeg"]');
 
         // Delete the entity
         $client->submit($crawler->selectButton('Delete')->form());
         $crawler = $client->followRedirect();
 
         // Check the entity has been delete on the list
-        $this->assertNotRegExp('/Foo/', $client->getResponse()->getContent());
+        $this->assertNotRegExp('/video/', $client->getResponse()->getContent());
     }
 
 }
