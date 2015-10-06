@@ -57,6 +57,33 @@ class Item extends Node
     }
 
     /**
+     * @return Feed
+     */
+    public function getFeed()
+    {
+        return $this->feed;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function hasFeed()
+    {
+        return $this->feed instanceof Feed;
+    }
+
+    /**
+     * @param Feed $feed
+     * @return $this
+     */
+    public function setFeed(Feed $feed)
+    {
+        $this->feed = $feed;
+        
+        return $this;
+    }
+
+    /**
      * Set publishedAt
      *
      * @param \DateTime $publishedAt
