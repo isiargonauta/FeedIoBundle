@@ -129,8 +129,8 @@ class Item extends Node
     /**
      * Set modifiedAt
      *
-     * @prePersist
-     * @preUpdate
+     * @PrePersist
+     * @PreUpdate
      *
      * @return Item
      */
