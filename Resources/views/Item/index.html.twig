@@ -21,7 +21,7 @@
         <tbody>
         {% for entity in entities %}
             <tr>
-                <td><a href="{{ path('item_show', { 'id': entity.id }) }}">{{ entity.publishedAt }}</a></td>
+                <td><a href="{{ path('item_show', { 'id': entity.id }) }}">{{ entity.publishedAt|date('Y-m-d H:i:s') }}</a></td>
                 <td>{% if entity.createdAt %}{{ entity.createdAt|date('Y-m-d H:i:s') }}{% endif %}</td>
                 <td>{% if entity.modifiedAt %}{{ entity.modifiedAt|date('Y-m-d H:i:s') }}{% endif %}</td>
                 <td>{{ entity.id }}</td>

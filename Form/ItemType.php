@@ -16,8 +16,6 @@ class ItemType extends AbstractType
     {
         $builder
             ->add('publishedAt')
-            ->add('createdAt')
-            ->add('modifiedAt')
             ->add('title')
             ->add('link')
             ->add('lastModified')

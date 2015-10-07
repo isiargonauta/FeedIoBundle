@@ -3,11 +3,15 @@
 namespace Debril\FeedIoBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\HasLifecycleCallbacks;
+use Doctrine\ORM\Mapping\PrePersist;
+use Doctrine\ORM\Mapping\PreUpdate;
 
 /**
  * Item
  *
  * @ORM\Entity(repositoryClass="Debril\FeedIoBundle\Entity\ItemRepository")
+ * @HasLifecycleCallbacks
  */
 class Item extends Node
 {
@@ -45,6 +49,12 @@ class Item extends Node
      * @var Media $medias
      */
     protected $medias;
+
+    public function __construct()
+    {
+        parent::__construct();
+        $this->createdAt = new \DateTime;
+    }
 
     /**
      * Get id
@@ -107,19 +117,6 @@ class Item extends Node
     }
 
     /**
-     * Set createdAt
-     *
-     * @param \DateTime $createdAt
-     * @return Item
-     */
-    public function setCreatedAt($createdAt)
-    {
-        $this->createdAt = $createdAt;
-
-        return $this;
-    }
-
-    /**
      * Get createdAt
      *
      * @return \DateTime 
@@ -132,12 +129,14 @@ class Item extends Node
     /**
      * Set modifiedAt
      *
-     * @param \DateTime $modifiedAt
+     * @prePersist
+     * @preUpdate
+     *
      * @return Item
      */
-    public function setModifiedAt($modifiedAt)
+    public function updateModifiedAt()
     {
-        $this->modifiedAt = $modifiedAt;
+        $this->modifiedAt = new \DateTime;
 
         return $this;
     }
