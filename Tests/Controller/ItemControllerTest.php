@@ -2,9 +2,7 @@
 
 namespace Debril\FeedIoBundle\Tests\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
-
-class ItemControllerTest extends WebTestCase
+class ItemControllerTest extends WebDbTestCase
 {
     
     public function testCompleteScenario()

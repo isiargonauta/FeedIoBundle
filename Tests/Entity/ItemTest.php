@@ -3,26 +3,10 @@
 namespace Debril\FeedIoBundle\Tests\Entity;
 
 use Debril\FeedIoBundle\Entity\Item;
-use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
+use Debril\FeedIoBundle\Tests\KernelDbTestCase;
 
-class ItemTest extends KernelTestCase
+class ItemTest extends KernelDbTestCase
 {
-
-    /**
-     * @var \Doctrine\ORM\EntityManager
-     */
-    private $em;
-
-    /**
-     * {@inheritDoc}
-     */
-    public function setUp()
-    {
-        self::bootKernel();
-        $this->em = static::$kernel->getContainer()
-                                   ->get('doctrine')
-                                   ->getManager();
-    }
 
     public function testDatesChange()
     {
@@ -54,5 +38,5 @@ class ItemTest extends KernelTestCase
         $this->assertEquals($createdAt, $freshItem->getCreatedAt());
         $this->assertNotEquals($modifiedAt, $freshItem->getModifiedAt());
     }
-
+    
 }

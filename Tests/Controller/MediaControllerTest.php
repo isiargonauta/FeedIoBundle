@@ -2,41 +2,9 @@
 
 namespace Debril\FeedIoBundle\Tests\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
-use Symfony\Component\Console\Application;
-use Symfony\Component\Console\Input\ArrayInput;
-use Symfony\Component\Console\Input\StringInput;
 
-class MediaControllerTest extends WebTestCase
+class MediaControllerTest extends WebDbTestCase
 {
-
-    protected static $application;
-
-
-    public function setUp()
-    {
-        self::runCommand('doctrine:database:create');
-        self::runCommand('doctrine:schema:update --force');
-    }
-
-    protected static function runCommand($command)
-    {
-        $command = sprintf('%s --quiet', $command);
-
-        return self::getApplication()->run(new StringInput($command));
-    }
-
-    protected static function getApplication()
-    {
-        if (null === self::$application) {
-            $client = static::createClient();
-
-            self::$application = new \Symfony\Bundle\FrameworkBundle\Console\Application($client->getKernel());
-            self::$application->setAutoExit(false);
-        }
-
-        return self::$application;
-    }
 
     public function testCompleteScenario()
     {
