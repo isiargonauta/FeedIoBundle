@@ -10,6 +10,9 @@ framework:
     validation:      { enable_annotations: true }
     session:
         storage_id: session.storage.filesystem
+    profiler:
+        enabled: false
+        collect: false
 
 doctrine:
     dbal:
@@ -24,7 +27,7 @@ doctrine:
         #     e.g. database_path: "%kernel.root_dir%/data/data.db3"
         #   2. Uncomment database_path in parameters.yml.dist
         #   3. Uncomment next line:
-        path: "/tmp/test.db3"
+        path: "%kernel.root_dir%/test.db3"
 
     orm:
         naming_strategy: doctrine.orm.naming_strategy.underscore
