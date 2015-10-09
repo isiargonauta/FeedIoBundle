@@ -1,3 +1,7 @@
+debril_feed_io_feed:
+    resource: "@DebrilFeedIoBundle/Resources/config/routing/feed.yml"
+    prefix:   /feed
+
 debril_feed_io_item:
     resource: "@DebrilFeedIoBundle/Resources/config/routing/item.yml"
     prefix:   /item

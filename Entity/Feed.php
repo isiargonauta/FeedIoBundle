@@ -3,11 +3,14 @@
 namespace Debril\FeedIoBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-
+use Doctrine\ORM\Mapping\HasLifecycleCallbacks;
+use Doctrine\ORM\Mapping\PrePersist;
+use Doctrine\ORM\Mapping\PreUpdate;
 /**
  * Feed
  *
  * @ORM\Entity(repositoryClass="Debril\FeedIoBundle\Entity\FeedRepository")
+ * @HasLifecycleCallbacks
  */
 class Feed extends Node
 {
@@ -22,7 +25,7 @@ class Feed extends Node
     /**
      * @var string
      *
-     * @ORM\Column(name="comment", type="text")
+     * @ORM\Column(name="comment", type="text", nullable=true)
      */
     private $comment;
 
@@ -34,27 +37,18 @@ class Feed extends Node
     private $createdAt;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="public_id", type="string", length=255)
-     */
-    protected $publicId;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="description", type="text")
-     */
-    protected $description;
-
-    /**
      *
      * @ORM\OneToMany(targetEntity="Item", mappedBy="feed", cascade={"persist"})
      * @ORM\OrderBy({"updated"="DESC"})
      * @var Item $items
      */
     protected $items;
-
+    
+    public function __construct()
+    {
+        parent::__construct();
+        $this->createdAt = new \DateTime;
+    }
     /**
      * Set external
      *
@@ -102,16 +96,28 @@ class Feed extends Node
     }
 
     /**
-     * Set createdAt
+     * Set modifiedAt
      *
-     * @param \DateTime $createdAt
-     * @return Feed
+     * @PrePersist
+     * @PreUpdate
+     *
+     * @return Item
      */
-    public function setCreatedAt($createdAt)
+    public function updateModifiedAt()
     {
-        $this->createdAt = $createdAt;
+        $this->modifiedAt = new \DateTime;
 
         return $this;
+    }
+
+    /**
+     * Get modifiedAt
+     *
+     * @return \DateTime 
+     */
+    public function getModifiedAt()
+    {
+        return $this->modifiedAt;
     }
 
     /**
@@ -123,4 +129,5 @@ class Feed extends Node
     {
         return $this->createdAt;
     }
+
 }

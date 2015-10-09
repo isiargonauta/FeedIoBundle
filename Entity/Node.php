@@ -32,7 +32,7 @@ class Node extends \FeedIo\Feed\Node
     /**
      * @var string
      *
-     * @ORM\Column(name="link", type="string", length=255)
+     * @ORM\Column(name="link", type="string", length=255, nullable=true)
      */
     protected $link;
 
@@ -46,14 +46,14 @@ class Node extends \FeedIo\Feed\Node
     /**
      * @var string
      *
-     * @ORM\Column(name="public_id", type="string", length=255)
+     * @ORM\Column(name="public_id", type="string", length=255, nullable=true)
      */
     protected $publicId;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="description", type="text")
+     * @ORM\Column(name="description", type="text", nullable=true)
      */
     protected $description;
 

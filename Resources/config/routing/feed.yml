@@ -1,0 +1,30 @@
+feed:
+    path:     /
+    defaults: { _controller: "DebrilFeedIoBundle:Feed:index" }
+
+feed_show:
+    path:     /{id}/show
+    defaults: { _controller: "DebrilFeedIoBundle:Feed:show" }
+
+feed_new:
+    path:     /new
+    defaults: { _controller: "DebrilFeedIoBundle:Feed:new" }
+
+feed_create:
+    path:     /create
+    defaults: { _controller: "DebrilFeedIoBundle:Feed:create" }
+    methods:  POST
+
+feed_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "DebrilFeedIoBundle:Feed:edit" }
+
+feed_update:
+    path:     /{id}/update
+    defaults: { _controller: "DebrilFeedIoBundle:Feed:update" }
+    methods:  [POST, PUT]
+
+feed_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "DebrilFeedIoBundle:Feed:delete" }
+    methods:  [POST, DELETE]
