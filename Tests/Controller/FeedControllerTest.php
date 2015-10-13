@@ -20,7 +20,7 @@ class FeedControllerTest extends WebDbTestCase
         $form = $crawler->selectButton('Create')->form(array(
             'debril_feediobundle_feed[title]'  => 'Test',
             'debril_feediobundle_feed[link]'  => 'http://',
-            'debril_feediobundle_feed[external]'  => true,
+            'debril_feediobundle_feed[type]'  => 2,
             'debril_feediobundle_feed[description]'  => 'lorem ipsum',
             // ... other fields to fill
         ));

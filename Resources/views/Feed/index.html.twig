@@ -6,7 +6,7 @@
     <table class="records_list">
         <thead>
             <tr>
-                <th>External</th>
+                <th>Type</th>
                 <th>Comment</th>
                 <th>Createdat</th>
                 <th>Publicid</th>
@@ -21,7 +21,7 @@
         <tbody>
         {% for entity in entities %}
             <tr>
-                <td><a href="{{ path('feed_show', { 'id': entity.id }) }}">{{ entity.external }}</a></td>
+                <td><a href="{{ path('feed_show', { 'id': entity.id }) }}">{{ entity.type }}</a></td>
                 <td>{{ entity.comment }}</td>
                 <td>{% if entity.createdAt %}{{ entity.createdAt|date('Y-m-d H:i:s') }}{% endif %}</td>
                 <td>{{ entity.publicId }}</td>

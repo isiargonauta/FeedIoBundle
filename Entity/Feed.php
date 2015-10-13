@@ -16,11 +16,26 @@ class Feed extends Node
 {
 
     /**
-     * @var boolean
-     *
-     * @ORM\Column(name="external", type="boolean")
+     * feeds fetched from external websites
      */
-    private $external;
+    const TYPE_EXTERNAL = 1;
+
+    /**
+     * feeds published across the internet
+     */
+    const TYPE_PUBLIC = 2;
+    
+    /**
+     * private feeds
+     */
+    const TYPE_PRIVATE = 3;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="type", type="smallint", options={"default":1})
+     */
+    private $type;
 
     /**
      * @var string
@@ -44,32 +59,65 @@ class Feed extends Node
      */
     protected $items;
     
+    /**
+     * @var array $availableTypes
+     */
+    private $availableTypes = [            
+            self::TYPE_EXTERNAL => 'external',
+            self::TYPE_PUBLIC => 'public',
+            self::TYPE_PRIVATE => 'private',
+    ];
+    
     public function __construct()
     {
         parent::__construct();
         $this->createdAt = new \DateTime;
     }
+
     /**
-     * Set external
+     * Tell if the given type is supportes
      *
-     * @param boolean $external
+     * @return boolean
+     */
+    public function isValidType($type)
+    {
+        return array_key_exists($type, $this->getAvailableTypes());
+    }
+     
+    /**
+     * Get getAvailableTypes
+     *
+     * @return array 
+     */
+    public function getAvailableTypes()
+    {
+        return $this->availableTypes;
+    }
+    
+    /**
+     * Set type
+     *
+     * @param integer $type
      * @return Feed
      */
-    public function setExternal($external)
+    public function setType($type)
     {
-        $this->external = $external;
+        if ( ! $this->isValidType($type) ) {
+            throw new \UnexpectedValueException($type);
+        }
+        $this->type = $type;
 
         return $this;
     }
 
     /**
-     * Get external
+     * Get type
      *
-     * @return boolean 
+     * @return integer 
      */
-    public function getExternal()
+    public function getType()
     {
-        return $this->external;
+        return $this->type;
     }
 
     /**
