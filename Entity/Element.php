@@ -32,7 +32,7 @@ class Element implements ElementInterface
     /**
      * @var string
      *
-     * @ORM\Column(name="value", type="string", length=255)
+     * @ORM\Column(name="value", type="string", nullable=true, length=255)
      */
     private $value;
 
@@ -41,7 +41,7 @@ class Element implements ElementInterface
      *
      * @ORM\Column(name="attributes", type="json_array")
      */
-    private $attributes;
+    private $attributes = [];
 
     /**
      * @ORM\ManyToOne(targetEntity="ElementSet", inversedBy="element_set_id")
@@ -111,7 +111,7 @@ class Element implements ElementInterface
      * @param array $attributes
      * @return Element
      */
-    public function setAttributes($attributes)
+    public function setAttributes(array $attributes)
     {
         $this->attributes = $attributes;
 
@@ -134,7 +134,11 @@ class Element implements ElementInterface
      */
     public function getAttribute($name)
     {
-        // TODO: Implement getAttribute() method.
+        if ( array_key_exists($name, $this->attributes) ) {
+            return $this->attributes[$name];
+        }
+        
+        throw new \UnexpectedValueException("missing attribute {$name}");
     }
 
     /**
@@ -144,7 +148,9 @@ class Element implements ElementInterface
      */
     public function setAttribute($name, $value)
     {
-        // TODO: Implement setAttribute() method.
+        $this->attributes[$name] = $value;
+        
+        return $this;
     }
 
 }
