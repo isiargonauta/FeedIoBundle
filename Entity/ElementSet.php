@@ -65,7 +65,7 @@ class ElementSet
      */
     public function getElements()
     {
-        return new \ArrayIterator($this->elements);
+        return $this->elements;
     }
 
     /**
