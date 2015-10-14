@@ -25,6 +25,22 @@ class ElementTest extends KernelDbTestCase
         
     }
     
+    public function testName()
+    {
+        $element = new Element();
+        $element->setName('test');
+        
+        $this->assertEquals('test', $element->getName());
+    }
+     
+    public function testName()
+    {
+        $element = new Element();
+        $element->setName('test');
+        $element->setValue('foo bar');
+        $this->assertEquals('foo bar', $element->getValue());
+    }
+    
     /**
      * @expectedException \UnexpectedValueException
      */
