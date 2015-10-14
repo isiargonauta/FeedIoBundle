@@ -35,6 +35,11 @@ class ElementSet
      */
     private $elements;
 
+    public function __construct()
+    {
+        $this->createdAt = new \DateTime;
+    }
+
     /**
      * Get id
      *
@@ -43,19 +48,6 @@ class ElementSet
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set createdAt
-     *
-     * @param \DateTime $createdAt
-     * @return ElementSet
-     */
-    public function setCreatedAt($createdAt)
-    {
-        $this->createdAt = $createdAt;
-
-        return $this;
     }
 
     /**
