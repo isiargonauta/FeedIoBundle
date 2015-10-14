@@ -33,7 +33,7 @@ class ElementTest extends KernelDbTestCase
         $this->assertEquals('test', $element->getName());
     }
      
-    public function testName()
+    public function testValue()
     {
         $element = new Element();
         $element->setName('test');
