@@ -39,7 +39,7 @@ class Element implements ElementInterface
     /**
      * @var array
      *
-     * @ORM\Column(name="attributes", type="json_array")
+     * @ORM\Column(name="attributes", type="json_array", nullable=true)
      */
     private $attributes = [];
 
@@ -58,7 +58,36 @@ class Element implements ElementInterface
     {
         return $this->id;
     }
+    
+    /**
+     * Get element set
+     *
+     * @return ElementSet
+     */
+    public function getElementSet()
+    {
+        return $this->elementSet;
+    }
 
+    /**
+     * @return boolean
+     */
+    public function hasElementSet()
+    {
+        return $this->elementSet instanceof ElementSet;
+    }
+
+    /**
+     * @param ElementSet $elementSet
+     * @return $this
+     */    
+    public function setElementSet(ElementSet $elementSet)
+    {
+        $this->elementSet = elementSet;
+        
+        return $this;
+    }
+    
     /**
      * Set name
      *
@@ -111,7 +140,7 @@ class Element implements ElementInterface
      * @param array $attributes
      * @return Element
      */
-    public function setAttributes(array $attributes)
+    public function setAttributes($attributes)
     {
         $this->attributes = $attributes;
 
