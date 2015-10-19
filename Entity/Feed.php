@@ -98,6 +98,7 @@ class Feed extends Node implements FeedInterface
     /**
      * Tell if the given type is supportes
      *
+     * @param integer $type
      * @return boolean
      */
     public function isValidType($type)
@@ -134,7 +135,7 @@ class Feed extends Node implements FeedInterface
     /**
      * Get type
      *
-     * @return integer 
+     * @return string 
      */
     public function getType()
     {

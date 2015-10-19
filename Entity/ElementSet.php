@@ -63,7 +63,7 @@ class ElementSet
     }
 
     /**
-     * @return \Iterator
+     * @return ElementInterface[]
      */
     public function getElements()
     {
