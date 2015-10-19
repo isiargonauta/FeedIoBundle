@@ -1,7 +1,7 @@
 # FeedIoBundle
 
 [![Latest Stable Version](https://poser.pugx.org/debril/feedio-bundle/v/stable.svg)](https://packagist.org/packages/debril/feedio-bundle)
-[![Build Status](https://travis-ci.org/alexdebril/FeedIoBundle.svg)](http://travis-ci.org/alexdebril/feedio-bundle)
+[![Build Status](https://travis-ci.org/alexdebril/FeedIoBundle.svg)](http://travis-ci.org/alexdebril/FeedIoBundle)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/alexdebril/FeedIoBundle/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/alexdebril/FeedIoBundle/?branch=master)
 [![Code Coverage](https://scrutinizer-ci.com/g/alexdebril/FeedIoBundle/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/alexdebril/FeedIoBundle/?branch=master)
 
