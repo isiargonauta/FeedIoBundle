@@ -116,7 +116,7 @@ class Node extends \FeedIo\Feed\Node
     public function getElementSet()
     {
         if ( is_null($this->elementSet) ) {
-            $this->elementSet = new ElementSet;
+            $this->setElementSet(new ElementSet);
         }
 
         return $this->elementSet;
@@ -148,7 +148,7 @@ class Node extends \FeedIo\Feed\Node
      */
     public function getElementIterator($name)
     {
-        return new ElementIterator($this->getElementSet()->getElements(), $name);
+        return new ElementIterator($this->getElementSet()->getElements()->getIterator(), $name);
     }
 
     /**
@@ -171,7 +171,7 @@ class Node extends \FeedIo\Feed\Node
      */
     public function getAllElements()
     {
-        return $this->getElementSet()->getElements();
+        return $this->getElementSet()->getElements()->getIterator();
     }
 
     /**
