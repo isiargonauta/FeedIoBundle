@@ -48,7 +48,7 @@ class Feed extends Node implements FeedInterface
      *
      * @ORM\OneToMany(targetEntity="Item", mappedBy="feed", cascade={"persist"})
      * @ORM\OrderBy({"publishedAt"="DESC"})
-     * @var Item $items
+     * @var ArrayCollection $items
      */
     protected $items;
     

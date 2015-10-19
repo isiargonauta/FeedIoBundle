@@ -33,7 +33,7 @@ class Item extends Node implements ItemInterface
 
     /**
      * @ORM\OneToMany(targetEntity="Media", mappedBy="item", cascade={"persist"})
-     * @var Media $medias
+     * @var ArrayCollection $medias
      */
     protected $medias;
 
