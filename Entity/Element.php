@@ -83,7 +83,7 @@ class Element implements ElementInterface
      */    
     public function setElementSet(ElementSet $elementSet)
     {
-        $this->elementSet = elementSet;
+        $this->elementSet = $elementSet;
         
         return $this;
     }
