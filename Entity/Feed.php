@@ -86,7 +86,7 @@ class Feed extends Node implements FeedInterface
      * Add a new item
      *
      * @param ItemInterface $item
-     * @return Feed
+     * @return $this
      */
     public function add(ItemInterface $item)
     {
@@ -120,7 +120,7 @@ class Feed extends Node implements FeedInterface
      * Set type
      *
      * @param integer $type
-     * @return Feed
+     * @return $this
      */
     public function setType($type)
     {
@@ -135,7 +135,7 @@ class Feed extends Node implements FeedInterface
     /**
      * Get type
      *
-     * @return string 
+     * @return integer
      */
     public function getType()
     {
@@ -146,7 +146,7 @@ class Feed extends Node implements FeedInterface
      * Set comment
      *
      * @param string $comment
-     * @return Feed
+     * @return $this
      */
     public function setComment($comment)
     {
@@ -203,7 +203,6 @@ class Feed extends Node implements FeedInterface
      * Checks if current position is valid
      * @link http://php.net/manual/en/iterator.valid.php
      * @return boolean The return value will be casted to boolean and then evaluated.
-     *                 Returns true on success or false on failure.
      */
     public function valid()
     {
