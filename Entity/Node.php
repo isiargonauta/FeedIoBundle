@@ -90,6 +90,10 @@ class Node extends \FeedIo\Feed\Node
      */
     public function getElementSet()
     {
+        if ( is_null($this->elementSet) ) {
+            $this->elementSet = new ElementSet;
+        }
+
         return $this->elementSet;
     }
 
