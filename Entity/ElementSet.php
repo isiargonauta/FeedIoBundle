@@ -4,6 +4,7 @@ namespace Debril\FeedIoBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use FeedIo\Feed\Node\ElementInterface;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * ElementSet
@@ -38,6 +39,7 @@ class ElementSet
     public function __construct()
     {
         $this->createdAt = new \DateTime;
+        $this->elements = new ArrayCollection();
     }
 
     /**
@@ -65,10 +67,6 @@ class ElementSet
      */
     public function getElements()
     {
-        if ( is_null($this->elements) ) {
-            $this->elements = [];
-        }
-        
         return $this->elements;
     }
 
@@ -78,7 +76,6 @@ class ElementSet
      */
     public function addElement(ElementInterface $element)
     {
-        $this->getElements();
         $this->elements[] = $element;
 
         return $this;
