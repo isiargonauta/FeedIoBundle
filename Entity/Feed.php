@@ -77,6 +77,7 @@ class Feed extends Node
     /**
      * Tell if the given type is supportes
      *
+     * @param integer $type
      * @return boolean
      */
     public function isValidType($type)
@@ -113,7 +114,7 @@ class Feed extends Node
     /**
      * Get type
      *
-     * @return integer 
+     * @return string 
      */
     public function getType()
     {
@@ -149,7 +150,7 @@ class Feed extends Node
      * @PrePersist
      * @PreUpdate
      *
-     * @return Item
+     * @return Feed
      */
     public function updateModifiedAt()
     {
