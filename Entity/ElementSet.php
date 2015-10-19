@@ -65,6 +65,10 @@ class ElementSet
      */
     public function getElements()
     {
+        if ( is_null($this->elements) ) {
+            $this->elements = [];
+        }
+        
         return $this->elements;
     }
 
@@ -74,6 +78,7 @@ class ElementSet
      */
     public function addElement(ElementInterface $element)
     {
+        $this->getElements();
         $this->elements[] = $element;
 
         return $this;
