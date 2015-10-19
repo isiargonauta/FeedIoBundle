@@ -2,17 +2,21 @@
 
 namespace Debril\FeedIoBundle\Entity;
 
+use \FeedIo\FeedInterface;
+use \FeedIo\Feed\ItemInterface;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\HasLifecycleCallbacks;
 use Doctrine\ORM\Mapping\PrePersist;
 use Doctrine\ORM\Mapping\PreUpdate;
+use Doctrine\Common\Collections\ArrayCollection;
+
 /**
  * Feed
  *
  * @ORM\Entity(repositoryClass="Debril\FeedIoBundle\Entity\FeedRepository")
  * @HasLifecycleCallbacks
  */
-class Feed extends Node
+class Feed extends Node implements FeedInterface
 {
 
     /**
@@ -54,7 +58,7 @@ class Feed extends Node
     /**
      *
      * @ORM\OneToMany(targetEntity="Item", mappedBy="feed", cascade={"persist"})
-     * @ORM\OrderBy({"updated"="DESC"})
+     * @ORM\OrderBy({"publishedAt"="DESC"})
      * @var Item $items
      */
     protected $items;
@@ -71,7 +75,36 @@ class Feed extends Node
     public function __construct()
     {
         parent::__construct();
+        $this->items = new ArrayCollection();
         $this->createdAt = new \DateTime;
+    }
+    
+    public function __toString()
+    {
+        return $this->getTitle();
+    }
+    
+    /**
+     * Get a new Item instance
+     *
+     * @return \Debril\FeedIoBundle\Entity\Item
+     */
+    public function newItem()
+    {
+        return new Item();
+    }
+    
+    /**
+     * Add a new item
+     *
+     * @param ItemInterface $item
+     * @return Feed
+     */
+    public function add(ItemInterface $item)
+    {
+        $this->items[] = $item;
+        
+        return $this;
     }
 
     /**
@@ -176,6 +209,62 @@ class Feed extends Node
     public function getCreatedAt()
     {
         return $this->createdAt;
+    }
+
+    /**
+     * (PHP 5 &gt;= 5.0.0)<br/>
+     * Return the current element
+     * @link http://php.net/manual/en/iterator.current.php
+     * @return mixed Can return any type.
+     */
+    public function current()
+    {
+        return $this->items->getIterator()->current();
+    }
+
+    /**
+     * (PHP 5 &gt;= 5.0.0)<br/>
+     * Move forward to next element
+     * @link http://php.net/manual/en/iterator.next.php
+     * @return void Any returned value is ignored.
+     */
+    public function next()
+    {
+        return $this->items->getIterator()->next();
+    }
+
+    /**
+     * (PHP 5 &gt;= 5.0.0)<br/>
+     * Return the key of the current element
+     * @link http://php.net/manual/en/iterator.key.php
+     * @return mixed scalar on success, or null on failure.
+     */
+    public function key()
+    {
+        return $this->items->getIterator()->key();
+    }
+
+    /**
+     * (PHP 5 &gt;= 5.0.0)<br/>
+     * Checks if current position is valid
+     * @link http://php.net/manual/en/iterator.valid.php
+     * @return boolean The return value will be casted to boolean and then evaluated.
+     *                 Returns true on success or false on failure.
+     */
+    public function valid()
+    {
+        return $this->items->getIterator()->valid();
+    }
+
+    /**
+     * (PHP 5 &gt;= 5.0.0)<br/>
+     * Rewind the Iterator to the first element
+     * @link http://php.net/manual/en/iterator.rewind.php
+     * @return void Any returned value is ignored.
+     */
+    public function rewind()
+    {
+        return $this->items->getIterator()->rewind();
     }
 
 }
