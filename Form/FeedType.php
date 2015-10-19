@@ -24,7 +24,6 @@ class FeedType extends AbstractType
             ->add('title')
             ->add('link')
             ->add('lastModified')
-            ->add('elementSet')
         ;
     }
     
