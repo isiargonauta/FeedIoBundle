@@ -5,16 +5,12 @@ namespace Debril\FeedIoBundle\Entity;
 use \FeedIo\FeedInterface;
 use \FeedIo\Feed\ItemInterface;
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\ORM\Mapping\HasLifecycleCallbacks;
-use Doctrine\ORM\Mapping\PrePersist;
-use Doctrine\ORM\Mapping\PreUpdate;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Feed
  *
  * @ORM\Entity(repositoryClass="Debril\FeedIoBundle\Entity\FeedRepository")
- * @HasLifecycleCallbacks
  */
 class Feed extends Node implements FeedInterface
 {
@@ -49,13 +45,6 @@ class Feed extends Node implements FeedInterface
     private $comment;
 
     /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="created_at", type="datetime")
-     */
-    private $createdAt;
-
-    /**
      *
      * @ORM\OneToMany(targetEntity="Item", mappedBy="feed", cascade={"persist"})
      * @ORM\OrderBy({"publishedAt"="DESC"})
@@ -76,7 +65,6 @@ class Feed extends Node implements FeedInterface
     {
         parent::__construct();
         $this->items = new ArrayCollection();
-        $this->createdAt = new \DateTime;
     }
     
     public function __toString()
@@ -174,41 +162,6 @@ class Feed extends Node implements FeedInterface
     public function getComment()
     {
         return $this->comment;
-    }
-
-    /**
-     * Set modifiedAt
-     *
-     * @PrePersist
-     * @PreUpdate
-     *
-     * @return Item
-     */
-    public function updateModifiedAt()
-    {
-        $this->modifiedAt = new \DateTime;
-
-        return $this;
-    }
-
-    /**
-     * Get modifiedAt
-     *
-     * @return \DateTime 
-     */
-    public function getModifiedAt()
-    {
-        return $this->modifiedAt;
-    }
-
-    /**
-     * Get createdAt
-     *
-     * @return \DateTime 
-     */
-    public function getCreatedAt()
-    {
-        return $this->createdAt;
     }
 
     /**

@@ -3,19 +3,15 @@
 namespace Debril\FeedIoBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\ORM\Mapping\HasLifecycleCallbacks;
-use Doctrine\ORM\Mapping\PrePersist;
-use Doctrine\ORM\Mapping\PreUpdate;
+
 
 /**
  * Item
  *
  * @ORM\Entity(repositoryClass="Debril\FeedIoBundle\Entity\ItemRepository")
- * @HasLifecycleCallbacks
  */
 class Item extends Node
 {
-
 
     /**
      * @var \DateTime
@@ -23,20 +19,6 @@ class Item extends Node
      * @ORM\Column(name="published_at", type="datetime")
      */
     private $publishedAt;
-
-    /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="created_at", type="datetime")
-     */
-    private $createdAt;
-
-    /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="modified_at", type="datetime")
-     */
-    private $modifiedAt;
 
     /**
      * @ORM\ManyToOne(targetEntity="Feed", inversedBy="items")
@@ -49,12 +31,6 @@ class Item extends Node
      * @var Media $medias
      */
     protected $medias;
-
-    public function __construct()
-    {
-        parent::__construct();
-        $this->createdAt = new \DateTime;
-    }
 
     /**
      * Get id
@@ -116,38 +92,4 @@ class Item extends Node
         return $this->publishedAt;
     }
 
-    /**
-     * Get createdAt
-     *
-     * @return \DateTime 
-     */
-    public function getCreatedAt()
-    {
-        return $this->createdAt;
-    }
-
-    /**
-     * Set modifiedAt
-     *
-     * @PrePersist
-     * @PreUpdate
-     *
-     * @return Item
-     */
-    public function updateModifiedAt()
-    {
-        $this->modifiedAt = new \DateTime;
-
-        return $this;
-    }
-
-    /**
-     * Get modifiedAt
-     *
-     * @return \DateTime 
-     */
-    public function getModifiedAt()
-    {
-        return $this->modifiedAt;
-    }
 }
