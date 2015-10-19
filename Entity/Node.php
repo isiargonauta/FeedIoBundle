@@ -138,7 +138,7 @@ class Node extends \FeedIo\Feed\Node
     /**
      * Returns all the item's elements
      *
-     * @return \ArrayIterator
+     * @return ElementInterface[]
      */
     public function getAllElements()
     {
@@ -148,7 +148,7 @@ class Node extends \FeedIo\Feed\Node
     /**
      * Returns the item's elements tag names
      *
-     * @return array
+     * @return \Iterator
      */
     public function listElements()
     {
