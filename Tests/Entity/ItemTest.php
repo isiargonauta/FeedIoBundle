@@ -3,6 +3,7 @@
 namespace Debril\FeedIoBundle\Tests\Entity;
 
 use Debril\FeedIoBundle\Entity\Item;
+use Debril\FeedIoBundle\Entity\Media;
 use Debril\FeedIoBundle\Tests\KernelDbTestCase;
 
 class ItemTest extends KernelDbTestCase
@@ -37,6 +38,28 @@ class ItemTest extends KernelDbTestCase
         
         $this->assertEquals($createdAt, $freshItem->getCreatedAt());
         $this->assertNotEquals($modifiedAt, $freshItem->getModifiedAt());
+    }
+    
+    public function testMedias()
+    {
+        $item = new Item();
+        $media = $item->newMedia();
+        
+        $media->setUrl('http');
+        
+        $item->addMedia($media);
+        
+        $this->assertTrue($item->hasMedia());
+        
+        $count = 0;
+        $this->assertInstanceOf('\Iterator', $item->getMedias(), 'getMedias must return an Iterator instance');
+        
+        foreach( $item->getMedias() as $element ) {
+            $count++;
+            $this->assertEquals('http', $media->getUrl(), 'media url must be foo');
+        }
+        
+        $this->assertEquals(1, $count, 'the item holds one media');
     }
     
 }
