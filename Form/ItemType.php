@@ -22,7 +22,6 @@ class ItemType extends AbstractType
             ->add('publicId')
             ->add('description')
             ->add('feed')
-            ->add('elementSet')
         ;
     }
     
