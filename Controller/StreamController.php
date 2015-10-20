@@ -12,7 +12,7 @@
 
 namespace Debril\FeedIoBundle\Controller;
 
-use FeedIo\Feed;
+use FeedIo\FeedInterface;
 use Debril\FeedIoBundle\Exception\FeedNotFoundException;
 use Debril\FeedIoBundle\Adapter\StorageInterface;    
 use Debril\FeedIoBundle\DependencyInjection\FeedIoContainerTrait;
@@ -112,10 +112,10 @@ class StreamController extends Controller
 
     /**
      * @param Response $response
-     * @param Feed $feed
+     * @param FeedInterface $feed
      * @return $this
      */
-    protected function setFeedHeaders(Response $response, Feed $feed)
+    protected function setFeedHeaders(Response $response, FeedInterface $feed)
     {
         $response->headers->set('Content-Type', 'application/xhtml+xml');
         if (! $this->isPrivate() ) {

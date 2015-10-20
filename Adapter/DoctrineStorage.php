@@ -19,6 +19,8 @@ use \FeedIo\FeedInterface;
 class DoctrineStorage implements StorageInterface
 {
 
+    const DEFAULT_REPOSITORY_NAME = 'DebrilFeedIoBundle:Feed';
+
     /**
      * @var \Doctrine\Bundle\DoctrineBundle\Registry
      */
@@ -32,9 +34,10 @@ class DoctrineStorage implements StorageInterface
     /**
      * @param \Doctrine\Bundle\DoctrineBundle\Registry $doctrine
      */
-    public function __construct(Registry $doctrine)
+    public function __construct(Registry $doctrine, $repositoryName = self::DEFAULT_REPOSITORY_NAME)
     {
         $this->doctrine = $doctrine;
+        $this->setRepositoryName($repositoryName);
     }
 
     /**

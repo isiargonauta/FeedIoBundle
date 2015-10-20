@@ -15,22 +15,27 @@
         "debril/rss-atom-bundle": "1.*"
     },
     "require": {
-        "php": ">=5.5",
+        "php": ">=5.5",        
+        "debril/feed-io": "~2.0",
+        "guzzlehttp/guzzle": "~6.0",
         "symfony/config": "~2.6",
         "symfony/console": "~2.6",
-        "guzzlehttp/guzzle": "~6.0",
-        "debril/feed-io": "~2.0"
+        "symfony/form": "~2.6",
+        "symfony/twig-bundle": "~2.7",
+        "twig/twig": "~1.18",
+        "doctrine/common": "~2.3",
+        "doctrine/doctrine-bundle": "~1.5",
+        "doctrine/orm": "~2.5",
+        "doctrine/doctrine-fixtures-bundle": "^2.2"
     },
     "require-dev": {
         "phpunit/phpunit": "~4.4",
-        "doctrine/common": "~2.3",
-        "doctrine/doctrine-bundle": "dev-master",
         "symfony/framework-bundle": "~2.6",
         "symfony/process": "~2.6",
         "symfony/validator": "~2.6",
         "symfony/finder": "~2.6",
-        "symfony/form": "~2.6",
-        "symfony/browser-kit": "~2.6"
+        "symfony/browser-kit": "~2.6",
+        "symfony/css-selector": "^2.7"
     },
     "autoload": {
         "psr-0": {

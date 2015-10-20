@@ -35,13 +35,15 @@ class StreamControllerTest extends WebTestCase
     }
 
     /**
-     * @expectedException Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     * 
      */
     public function testNotFound()
     {
         $client = static::createClient();
 
         $client->request('GET', '/mock/rss/not-found');
+        
+        $this->assertEquals(404, $client->getResponse()->getStatusCode());
     }
 
 }
