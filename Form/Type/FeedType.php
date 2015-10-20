@@ -1,6 +1,6 @@
 <?php
 
-namespace Debril\FeedIoBundle\Form;
+namespace Debril\FeedIoBundle\Form\Type;
 
 use Debril\FeedIoBundle\Entity\Feed;
 use Symfony\Component\Form\AbstractType;

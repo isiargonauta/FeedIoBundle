@@ -6,7 +6,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 use Debril\FeedIoBundle\Entity\Feed;
-use Debril\FeedIoBundle\Form\FeedType;
+use Debril\FeedIoBundle\Form\Type\FeedType;
 
 /**
  * Feed controller.

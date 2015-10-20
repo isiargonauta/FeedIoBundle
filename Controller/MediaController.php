@@ -6,7 +6,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 use Debril\FeedIoBundle\Entity\Media;
-use Debril\FeedIoBundle\Form\MediaType;
+use Debril\FeedIoBundle\Form\Type\MediaType;
 
 /**
  * Media controller.

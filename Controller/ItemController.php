@@ -6,7 +6,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 use Debril\FeedIoBundle\Entity\Item;
-use Debril\FeedIoBundle\Form\ItemType;
+use Debril\FeedIoBundle\Form\Type\ItemType;
 
 /**
  * Item controller.
