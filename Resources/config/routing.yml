@@ -17,7 +17,11 @@ debril_feed_io_crud_item:
 debril_feed_io_media:
     resource: "@DebrilFeedIoBundle/Resources/config/routing/media.yml"
     prefix:   /media
-
+    
+debril_feed_io_crud_media:
+    resource: "@DebrilFeedIoBundle/Resources/config/routing/crud/media.yml"
+    prefix:   /crud/media
+    
 feedio_stream:
     path: /stream/{format}/{id}
     defaults: { _controller: DebrilFeedIoBundle:Stream:index, format: 'rss' }

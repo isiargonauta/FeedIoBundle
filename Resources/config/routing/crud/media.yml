@@ -1,0 +1,30 @@
+crud_media:
+    path:     /
+    defaults: { _controller: "DebrilFeedIoBundle:Crud/Media:index" }
+
+crud_media_show:
+    path:     /{id}/show
+    defaults: { _controller: "DebrilFeedIoBundle:Crud/Media:show" }
+
+crud_media_new:
+    path:     /new
+    defaults: { _controller: "DebrilFeedIoBundle:Crud/Media:new" }
+
+crud_media_create:
+    path:     /create
+    defaults: { _controller: "DebrilFeedIoBundle:Crud/Media:create" }
+    methods:  POST
+
+crud_media_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "DebrilFeedIoBundle:Crud/Media:edit" }
+
+crud_media_update:
+    path:     /{id}/update
+    defaults: { _controller: "DebrilFeedIoBundle:Crud/Media:update" }
+    methods:  [POST, PUT]
+
+crud_media_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "DebrilFeedIoBundle:Crud/Media:delete" }
+    methods:  [POST, DELETE]
