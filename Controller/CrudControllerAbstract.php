@@ -6,14 +6,70 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 use Debril\FeedIoBundle\Entity\Feed;
-use Debril\FeedIoBundle\Form\Type\FeedType;
+use Debril\FeedIoBundle\Form\FeedType;
 
 /**
  * Feed controller.
  *
  */
-class FeedController extends Controller
+abstract class CrudControllerAbstract extends Controller
 {
+
+    const ENTITY_NAME = '';
+
+    /**
+     * @return 
+     */
+    abstract protected function getEntity();
+    
+    /**
+     * @return 
+     */
+    abstract protected function getFormType();
+
+    /**
+     * @return string 
+     */
+    public function getEntityName()
+    {
+        return static::ENTITY_NAME;
+    }
+    
+    /**
+     * @return string 
+     */
+    public function getRepositoryName()
+    {
+        $name = ucfirst($this->getEntityName());
+        
+        return "DebrilFeedIoBundle:{$name}";
+    }
+
+    /**
+     * @return string 
+     */
+    public function getTemplateFullName($template)
+    {
+        $name = ucfirst($this->getEntityName());
+        return "DebrilFeedIoBundle:Crud/{$name}:{$template}";
+    }
+    
+    /**
+     * @return string 
+     */
+    public function getEntityRoute($action = null)
+    {
+        $args = [
+            'crud',
+            $this->getEntityName(),
+        ];
+        
+        if ( ! is_null($action) ) {
+            $args[] = $action;
+        }
+        
+        return implode('_', $args);
+    }
 
     /**
      * Lists all Feed entities.
@@ -23,9 +79,9 @@ class FeedController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('DebrilFeedIoBundle:Feed')->findAll();
+        $entities = $em->getRepository($this->getRepositoryName())->findAll();
 
-        return $this->render('DebrilFeedIoBundle:Feed:index.html.twig', array(
+        return $this->render($this->getTemplateFullName('index.html.twig'), array(
             'entities' => $entities,
         ));
     }
@@ -35,7 +91,7 @@ class FeedController extends Controller
      */
     public function createAction(Request $request)
     {
-        $entity = new Feed();
+        $entity = $this->getEntity();
         $form = $this->createCreateForm($entity);
         $form->handleRequest($request);
 
@@ -44,10 +100,10 @@ class FeedController extends Controller
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('feed_show', array('id' => $entity->getId())));
+            return $this->redirect($this->generateUrl($this->getEntityRoute('show'), array('id' => $entity->getId())));
         }
 
-        return $this->render('DebrilFeedIoBundle:Feed:new.html.twig', array(
+        return $this->render($this->getTemplateFullName('new.html.twig'), array(
             'entity' => $entity,
             'form'   => $form->createView(),
         ));
@@ -60,10 +116,10 @@ class FeedController extends Controller
      *
      * @return \Symfony\Component\Form\Form The form
      */
-    private function createCreateForm(Feed $entity)
+    private function createCreateForm($entity)
     {
-        $form = $this->createForm(new FeedType(), $entity, array(
-            'action' => $this->generateUrl('feed_create'),
+        $form = $this->createForm($this->getFormType(), $entity, array(
+            'action' => $this->generateUrl($this->getEntityRoute('create')),
             'method' => 'POST',
         ));
 
@@ -78,10 +134,10 @@ class FeedController extends Controller
      */
     public function newAction()
     {
-        $entity = new Feed();
+        $entity = $this->getEntity();
         $form   = $this->createCreateForm($entity);
 
-        return $this->render('DebrilFeedIoBundle:Feed:new.html.twig', array(
+        return $this->render($this->getTemplateFullName('new.html.twig'), array(
             'entity' => $entity,
             'form'   => $form->createView(),
         ));
@@ -95,7 +151,7 @@ class FeedController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('DebrilFeedIoBundle:Feed')->find($id);
+        $entity = $em->getRepository($this->getRepositoryName())->find($id);
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Feed entity.');
@@ -103,7 +159,7 @@ class FeedController extends Controller
 
         $deleteForm = $this->createDeleteForm($id);
 
-        return $this->render('DebrilFeedIoBundle:Feed:show.html.twig', array(
+        return $this->render($this->getTemplateFullName('show.html.twig'), array(
             'entity'      => $entity,
             'delete_form' => $deleteForm->createView(),
         ));
@@ -117,7 +173,7 @@ class FeedController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('DebrilFeedIoBundle:Feed')->find($id);
+        $entity = $em->getRepository($this->getRepositoryName())->find($id);
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Feed entity.');
@@ -126,7 +182,7 @@ class FeedController extends Controller
         $editForm = $this->createEditForm($entity);
         $deleteForm = $this->createDeleteForm($id);
 
-        return $this->render('DebrilFeedIoBundle:Feed:edit.html.twig', array(
+        return $this->render($this->getTemplateFullName('edit.html.twig'), array(
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
@@ -140,10 +196,10 @@ class FeedController extends Controller
     *
     * @return \Symfony\Component\Form\Form The form
     */
-    private function createEditForm(Feed $entity)
+    private function createEditForm($entity)
     {
-        $form = $this->createForm(new FeedType(), $entity, array(
-            'action' => $this->generateUrl('feed_update', array('id' => $entity->getId())),
+        $form = $this->createForm($this->getFormType(), $entity, array(
+            'action' => $this->generateUrl($this->getEntityRoute('update'), array('id' => $entity->getId())),
             'method' => 'PUT',
         ));
 
@@ -159,7 +215,7 @@ class FeedController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('DebrilFeedIoBundle:Feed')->find($id);
+        $entity = $em->getRepository($this->getRepositoryName())->find($id);
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Feed entity.');
@@ -172,10 +228,10 @@ class FeedController extends Controller
         if ($editForm->isValid()) {
             $em->flush();
 
-            return $this->redirect($this->generateUrl('feed_edit', array('id' => $id)));
+            return $this->redirect($this->generateUrl($this->getEntityRoute('edit'), array('id' => $id)));
         }
 
-        return $this->render('DebrilFeedIoBundle:Feed:edit.html.twig', array(
+        return $this->render($this->getTemplateFullName('edit.html.twig'), array(
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
@@ -192,7 +248,7 @@ class FeedController extends Controller
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $entity = $em->getRepository('DebrilFeedIoBundle:Feed')->find($id);
+            $entity = $em->getRepository($this->getRepositoryName())->find($id);
 
             if (!$entity) {
                 throw $this->createNotFoundException('Unable to find Feed entity.');
@@ -202,7 +258,7 @@ class FeedController extends Controller
             $em->flush();
         }
 
-        return $this->redirect($this->generateUrl('feed'));
+        return $this->redirect($this->generateUrl($this->getEntityRoute()));
     }
 
     /**
@@ -215,7 +271,7 @@ class FeedController extends Controller
     private function createDeleteForm($id)
     {
         return $this->createFormBuilder()
-            ->setAction($this->generateUrl('feed_delete', array('id' => $id)))
+            ->setAction($this->generateUrl($this->getEntityRoute('delete'), array('id' => $id)))
             ->setMethod('DELETE')
             ->add('submit', 'submit', array('label' => 'Delete'))
             ->getForm()
