@@ -1,22 +1,10 @@
-debril_feed_io_feed:
-    resource: "@DebrilFeedIoBundle/Resources/config/routing/feed.yml"
-    prefix:   /feed
-    
 debril_feed_io_crud_feed:
     resource: "@DebrilFeedIoBundle/Resources/config/routing/crud/feed.yml"
     prefix:   /crud/feed
     
-debril_feed_io_item:
-    resource: "@DebrilFeedIoBundle/Resources/config/routing/item.yml"
-    prefix:   /item
-    
 debril_feed_io_crud_item:
     resource: "@DebrilFeedIoBundle/Resources/config/routing/crud/item.yml"
     prefix:   /crud/item
-    
-debril_feed_io_media:
-    resource: "@DebrilFeedIoBundle/Resources/config/routing/media.yml"
-    prefix:   /media
     
 debril_feed_io_crud_media:
     resource: "@DebrilFeedIoBundle/Resources/config/routing/crud/media.yml"
