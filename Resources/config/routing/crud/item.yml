@@ -1,0 +1,30 @@
+crud_item:
+    path:     /
+    defaults: { _controller: "DebrilFeedIoBundle:Crud/Item:index" }
+
+crud_item_show:
+    path:     /{id}/show
+    defaults: { _controller: "DebrilFeedIoBundle:Crud/Item:show" }
+
+crud_item_new:
+    path:     /new
+    defaults: { _controller: "DebrilFeedIoBundle:Crud/Item:new" }
+
+crud_item_create:
+    path:     /create
+    defaults: { _controller: "DebrilFeedIoBundle:Crud/Item:create" }
+    methods:  POST
+
+crud_item_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "DebrilFeedIoBundle:Crud/Item:edit" }
+
+crud_item_update:
+    path:     /{id}/update
+    defaults: { _controller: "DebrilFeedIoBundle:Crud/Item:update" }
+    methods:  [POST, PUT]
+
+crud_item_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "DebrilFeedIoBundle:Crud/Item:delete" }
+    methods:  [POST, DELETE]
