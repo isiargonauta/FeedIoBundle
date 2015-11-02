@@ -1,0 +1,7 @@
+services:    
+    feedio.client:
+        class: FeedIo\Adapter\FileSystem\Client
+        
+    feedio:
+        class: FeedIo\FeedIo
+        arguments: ["@feedio.client", "@logger"]

@@ -1,4 +1,7 @@
 # Tests/Controller/App/config.yml
+imports:
+    - { resource: services.yml }
+
 framework:
     secret:          secret
     test: ~
