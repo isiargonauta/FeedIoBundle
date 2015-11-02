@@ -98,7 +98,7 @@ class FeedController extends Controller
 
         return $this->render('DebrilFeedIoBundle:Feed:show.html.twig', array(
                 'feed' => $feed,
-                'items' => $feed->getItems(),
+                'items' => $feed->getItemIterator(),
             ));
     }
 

@@ -169,13 +169,8 @@ class Feed extends Node implements FeedInterface
     }
 
     /**
-     * @return ArrayCollection
+     * @return ArrayIterator
      */
-    public function getItems()
-    {
-        return $this->items;
-    }
-    
     public function getItemIterator()
     {
         if ( is_null($this->itemIterator) ) {
