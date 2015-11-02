@@ -3,6 +3,7 @@
 namespace Debril\FeedIoBundle\Tests\Entity;
 
 use Debril\FeedIoBundle\Entity\Feed;
+use Debril\FeedIoBundle\Entity\Item;
 use Debril\FeedIoBundle\Tests\KernelDbTestCase;
 
 class FeedTest extends KernelDbTestCase
@@ -47,6 +48,30 @@ class FeedTest extends KernelDbTestCase
     {
         $feed = new Feed;
         $feed->setType(4);
+    }
+    
+    public function testIterator()
+    {
+        $feed = new Feed();
+        $feed->add(new Item());
+        $feed->add(new Item());
+        
+        $this->assertEquals(2, $this->countItems($feed));
+        $this->assertEquals(2, $this->countItems($feed));
+    }
+    
+    protected function countItems($feed)
+    {
+        $count = 0;
+        
+        foreach($feed as $item) {
+            if ($count > 4) {
+                break;
+            }
+            $count++;
+        }
+     
+        return $count;            
     }
     
 }

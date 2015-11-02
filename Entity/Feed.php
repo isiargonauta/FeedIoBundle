@@ -52,6 +52,8 @@ class Feed extends Node implements FeedInterface
      */
     protected $items;
     
+    protected $itemIterator;
+    
     /**
      * @var array $availableTypes
      */
@@ -173,6 +175,15 @@ class Feed extends Node implements FeedInterface
     {
         return $this->items;
     }
+    
+    public function getItemIterator()
+    {
+        if ( is_null($this->itemIterator) ) {
+            $this->itemIterator = $this->items->getIterator();
+        }
+        
+        return $this->itemIterator;
+    } 
 
     /**
      * (PHP 5 &gt;= 5.0.0)<br/>
@@ -182,7 +193,7 @@ class Feed extends Node implements FeedInterface
      */
     public function current()
     {
-        return $this->items->getIterator()->current();
+        return $this->getItemIterator()->current();
     }
 
     /**
@@ -193,7 +204,7 @@ class Feed extends Node implements FeedInterface
      */
     public function next()
     {
-        return $this->items->getIterator()->next();
+        return $this->getItemIterator()->next();
     }
 
     /**
@@ -204,7 +215,7 @@ class Feed extends Node implements FeedInterface
      */
     public function key()
     {
-        return $this->items->getIterator()->key();
+        return $this->getItemIterator()->key();
     }
 
     /**
@@ -215,7 +226,7 @@ class Feed extends Node implements FeedInterface
      */
     public function valid()
     {
-        return $this->items->getIterator()->valid();
+        return $this->getItemIterator()->valid();
     }
 
     /**
@@ -226,7 +237,7 @@ class Feed extends Node implements FeedInterface
      */
     public function rewind()
     {
-        return $this->items->getIterator()->rewind();
+        return $this->getItemIterator()->rewind();
     }
 
 }
