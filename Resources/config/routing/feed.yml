@@ -1,0 +1,27 @@
+feed_add:
+    path:     /add
+    defaults: { _controller: DebrilFeedIoBundle:Feed:add }
+
+feed_new:
+    path:     /new
+    defaults: { _controller: DebrilFeedIoBundle:Feed:new }
+
+feed_save:
+    path:     /save
+    defaults: { _controller: DebrilFeedIoBundle:Feed:save }
+
+feed_show:
+    path:     /{id}/show
+    defaults: { _controller: DebrilFeedIoBundle:Feed:show }
+
+feed_edit:
+    path:     /edit
+    defaults: { _controller: DebrilFeedIoBundle:Feed:edit }
+
+feed_index:
+    path:     /
+    defaults: { _controller: DebrilFeedIoBundle:Feed:index }
+
+feed_update:
+    path:     /update
+    defaults: { _controller: DebrilFeedIoBundle:Feed:update }

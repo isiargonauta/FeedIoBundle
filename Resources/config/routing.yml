@@ -1,3 +1,7 @@
+debril_feed_io_feed:
+    resource: "@DebrilFeedIoBundle/Resources/config/routing/feed.yml"
+    prefix:   /feed
+
 debril_feed_io_crud_feed:
     resource: "@DebrilFeedIoBundle/Resources/config/routing/crud/feed.yml"
     prefix:   /crud/feed
@@ -26,4 +30,3 @@ feedio_atom:
 feedio_mock:
     path: /mock/rss/{id}
     defaults: { _controller: DebrilFeedIoBundle:Stream:index, "format": 'rss', "id": null }
-    
