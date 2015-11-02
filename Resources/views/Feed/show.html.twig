@@ -1,0 +1,55 @@
+{% extends "::base.html.twig" %}
+
+{% block body -%}
+    <h1>{{ feed.title }}</h1>
+
+    <table class="record_properties">
+        <tbody>
+            <tr>
+                <th>Type</th>
+                <td>{{ feed.type }}</td>
+            </tr>
+            <tr>
+                <th>Comment</th>
+                <td>{{ feed.comment }}</td>
+            </tr>
+            <tr>
+                <th>Publicid</th>
+                <td>{{ feed.publicId }}</td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>{{ feed.description }}</td>
+            </tr>
+            <tr>
+                <th>Link</th>
+                <td>{{ feed.link }}</td>
+            </tr>
+            <tr>
+                <th>Lastmodified</th>
+                <td>{{ feed.lastModified|date('Y-m-d H:i:s') }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+        <ul class="record_actions">
+    <li>
+        <a href="{{ path('feed_index') }}">
+            Back to the list
+        </a>
+    </li>
+    <li>
+        <a href="{{ path('feed_edit', { 'id': feed.id }) }}">
+            Edit
+        </a>
+    </li>
+</ul>
+
+<ul>
+{% for item in items %}
+    <li>
+        {{ item.title }}
+    </li>
+{% endfor %}
+</ul>
+{% endblock %}
