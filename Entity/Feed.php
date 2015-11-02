@@ -81,7 +81,7 @@ class Feed extends Node implements FeedInterface
     {
         return new Item();
     }
-    
+        
     /**
      * Add a new item
      *
@@ -91,6 +91,7 @@ class Feed extends Node implements FeedInterface
     public function add(ItemInterface $item)
     {
         $this->items[] = $item;
+        $item->setFeed($this);
         
         return $this;
     }
@@ -163,6 +164,14 @@ class Feed extends Node implements FeedInterface
     public function getComment()
     {
         return $this->comment;
+    }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getItems()
+    {
+        return $this->items;
     }
 
     /**
