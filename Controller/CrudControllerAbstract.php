@@ -6,12 +6,16 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 /**
- * Feed controller.
+ * Crud abstract controller.
  *
  */
 abstract class CrudControllerAbstract extends Controller
 {
 
+    /**
+     * You MUST specify which entity is managed by the controller
+     * @string 
+     */
     const ENTITY_NAME = '';
 
     /**
@@ -69,7 +73,7 @@ abstract class CrudControllerAbstract extends Controller
     }
 
     /**
-     * Lists all Feed entities.
+     * Lists all entities.
      *
      */
     public function indexAction()
@@ -83,7 +87,7 @@ abstract class CrudControllerAbstract extends Controller
         ));
     }
     /**
-     * Creates a new Feed entity.
+     * Creates a new entity.
      *
      */
     public function createAction(Request $request)
@@ -107,9 +111,9 @@ abstract class CrudControllerAbstract extends Controller
     }
 
     /**
-     * Creates a form to create a Feed entity.
+     * Creates a form to create a entity.
      *
-     * @param Feed $entity The entity
+     * @param $entity The entity
      *
      * @return \Symfony\Component\Form\Form The form
      */
@@ -126,7 +130,7 @@ abstract class CrudControllerAbstract extends Controller
     }
 
     /**
-     * Displays a form to create a new Feed entity.
+     * Displays a form to create a new entity.
      *
      */
     public function newAction()
@@ -141,7 +145,7 @@ abstract class CrudControllerAbstract extends Controller
     }
 
     /**
-     * Finds and displays a Feed entity.
+     * Finds and displays a entity.
      *
      */
     public function showAction($id)
@@ -151,7 +155,7 @@ abstract class CrudControllerAbstract extends Controller
         $entity = $em->getRepository($this->getRepositoryName())->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Feed entity.');
+            throw $this->createNotFoundException('Unable to find entity.');
         }
 
         $deleteForm = $this->createDeleteForm($id);
@@ -163,7 +167,7 @@ abstract class CrudControllerAbstract extends Controller
     }
 
     /**
-     * Displays a form to edit an existing Feed entity.
+     * Displays a form to edit an existing entity.
      *
      */
     public function editAction($id)
@@ -173,7 +177,7 @@ abstract class CrudControllerAbstract extends Controller
         $entity = $em->getRepository($this->getRepositoryName())->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Feed entity.');
+            throw $this->createNotFoundException('Unable to find entity.');
         }
 
         $editForm = $this->createEditForm($entity);
@@ -187,9 +191,9 @@ abstract class CrudControllerAbstract extends Controller
     }
 
     /**
-    * Creates a form to edit a Feed entity.
+    * Creates a form to edit an entity.
     *
-    * @param Feed $entity The entity
+    * @param $entity The entity
     *
     * @return \Symfony\Component\Form\Form The form
     */
@@ -205,7 +209,7 @@ abstract class CrudControllerAbstract extends Controller
         return $form;
     }
     /**
-     * Edits an existing Feed entity.
+     * Edits an existing entity.
      *
      */
     public function updateAction(Request $request, $id)
@@ -215,7 +219,7 @@ abstract class CrudControllerAbstract extends Controller
         $entity = $em->getRepository($this->getRepositoryName())->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Feed entity.');
+            throw $this->createNotFoundException('Unable to find entity.');
         }
 
         $deleteForm = $this->createDeleteForm($id);
@@ -235,7 +239,7 @@ abstract class CrudControllerAbstract extends Controller
         ));
     }
     /**
-     * Deletes a Feed entity.
+     * Deletes a entity.
      *
      */
     public function deleteAction(Request $request, $id)
@@ -248,7 +252,7 @@ abstract class CrudControllerAbstract extends Controller
             $entity = $em->getRepository($this->getRepositoryName())->find($id);
 
             if (!$entity) {
-                throw $this->createNotFoundException('Unable to find Feed entity.');
+                throw $this->createNotFoundException('Unable to find entity.');
             }
 
             $em->remove($entity);
@@ -259,7 +263,7 @@ abstract class CrudControllerAbstract extends Controller
     }
 
     /**
-     * Creates a form to delete a Feed entity by id.
+     * Creates a form to delete an entity by id.
      *
      * @param mixed $id The entity id
      *
