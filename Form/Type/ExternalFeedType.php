@@ -2,7 +2,6 @@
 
 namespace Debril\FeedIoBundle\Form\Type;
 
-use Debril\FeedIoBundle\Entity\Feed;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -15,7 +14,6 @@ class ExternalFeedType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $feed = new Feed;
         $builder
             ->add('link')
             ->add('submit', 'submit', array('label' => 'Add'))
