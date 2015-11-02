@@ -115,6 +115,14 @@ class Item extends Node implements ItemInterface
         return new Media();
     }
 
+    public function setLastModified(\DateTime $lastModified)
+    {
+        $this->setPublishedAt($lastModified);
+        parent::setLastModified($lastModified);
+        
+        return $this;
+    }
+
     /**
      * Set publishedAt
      *
