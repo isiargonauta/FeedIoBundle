@@ -43,6 +43,16 @@
             Edit
         </a>
     </li>
+    <li>
+        <a href="{{ path('feedio_rss', { 'id': feed.id }) }}">
+            RSS
+        </a>
+    </li>  
+    <li>
+        <a href="{{ path('feedio_atom', { 'id': feed.id }) }}">
+            Atom
+        </a>
+    </li>  
 </ul>
 
 <ul>
