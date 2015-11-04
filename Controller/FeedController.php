@@ -35,13 +35,8 @@ class FeedController extends Controller
         $form->handleRequest($request);
         
         if ( $form->isValid() ) {
-            
-            $this->getFeedIo()->read($feed->getLink(), $feed);
-            $feed->setType(Feed::TYPE_EXTERNAL);         
-
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($feed);
-            $em->flush();
+            $feed->setType(Feed::TYPE_EXTERNAL);
+            $this->updateFeed($feed);
 
             return $this->redirect(
                         $this->generateUrl('feed_show',
@@ -89,8 +84,7 @@ class FeedController extends Controller
      */
     public function showAction($id)
     {        
-        $em = $this->getDoctrine()->getManager();
-        $feed = $em->getRepository('DebrilFeedIoBundle:Feed')->find($id);
+        $feed = $this->getFeedById($id);
 
         if (!$feed) {
             throw $this->createNotFoundException('Unable to find feed.');
@@ -99,6 +93,7 @@ class FeedController extends Controller
         return $this->render('DebrilFeedIoBundle:Feed:show.html.twig', array(
                 'feed' => $feed,
                 'items' => $feed->getItemIterator(),
+                'showUpdateLink' => $feed->getType() === Feed::TYPE_EXTERNAL,
             ));
     }
 
@@ -115,11 +110,19 @@ class FeedController extends Controller
     /**
      * updates an external feed.
      */
-    public function updateAction()
+    public function updateAction($id)
     {
-        return $this->render('DebrilFeedIoBundle:Feed:update.html.twig', array(
-                // ...
-            ));
+        $feed = $this->getFeedById($id);
+        $this->updateFeed($feed);
+        
+        $this->addFlash('notice', "Feed was successfully updated");
+        
+        return $this->redirect(
+                    $this->generateUrl('feed_show',
+                    array(
+                        'id' => $feed->getId()
+                        ))
+                    );
     }
     
     /**
@@ -128,5 +131,30 @@ class FeedController extends Controller
     protected function getFeedIo()
     {
         return $this->get('feedio');
+    }
+    
+    /**
+     * @return Feed
+     */
+    protected function getFeedById($id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        
+        return $em->getRepository('DebrilFeedIoBundle:Feed')->find($id);
+    }
+    
+    /**
+     * @param Feed $feed 
+     * @return Feed
+     */
+    protected function updateFeed(Feed $feed)
+    {
+        $this->getFeedIo()->read($feed->getLink(), $feed, $feed->getLastModified());
+
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($feed);
+        $em->flush();  
+    
+        return $feed;
     }
 }

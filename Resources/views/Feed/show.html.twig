@@ -1,6 +1,6 @@
-{% extends "::base.html.twig" %}
+{% extends "DebrilFeedIoBundle::base.html.twig" %}
 
-{% block body -%}
+{% block main -%}
     <h1>{{ feed.title }}</h1>
 
     <table class="record_properties">
@@ -52,7 +52,14 @@
         <a href="{{ path('feedio_atom', { 'id': feed.id }) }}">
             Atom
         </a>
-    </li>  
+    </li>
+    {% if showUpdateLink %}
+    <li>
+        <a href="{{ path('feed_update', { 'id': feed.id }) }}">
+            Update feed
+        </a>
+    </li>
+    {% endif %}
 </ul>
 
 <ul>

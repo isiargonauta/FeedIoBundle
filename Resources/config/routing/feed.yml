@@ -23,5 +23,5 @@ feed_index:
     defaults: { _controller: DebrilFeedIoBundle:Feed:index }
 
 feed_update:
-    path:     /update
+    path:     /{id}/update
     defaults: { _controller: DebrilFeedIoBundle:Feed:update }
