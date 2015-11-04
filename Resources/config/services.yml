@@ -8,4 +8,4 @@ services:
 
     feedio:
         class: FeedIo\FeedIo
-        arguments: ["@feedio.client", "@logger"]
+        arguments: ["@feedio.client", "@monolog.logger.php"]
