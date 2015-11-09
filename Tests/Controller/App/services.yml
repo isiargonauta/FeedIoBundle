@@ -1,6 +1,10 @@
 services:    
     feedio.client:
         class: FeedIo\Adapter\FileSystem\Client
+
+    feedio.storage:
+        class: Debril\FeedIoBundle\Adapter\DoctrineStorage
+        arguments: ["@doctrine"]
         
     feedio:
         class: FeedIo\FeedIo
