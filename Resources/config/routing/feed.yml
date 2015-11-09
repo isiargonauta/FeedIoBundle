@@ -6,16 +6,12 @@ feed_new:
     path:     /new
     defaults: { _controller: DebrilFeedIoBundle:Feed:new }
 
-feed_save:
-    path:     /save
-    defaults: { _controller: DebrilFeedIoBundle:Feed:save }
-
 feed_show:
     path:     /{id}/show
     defaults: { _controller: DebrilFeedIoBundle:Feed:show }
 
 feed_edit:
-    path:     /edit
+    path:     /{id}/edit
     defaults: { _controller: DebrilFeedIoBundle:Feed:edit }
 
 feed_index:
