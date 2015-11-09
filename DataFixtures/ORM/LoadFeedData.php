@@ -18,7 +18,7 @@ class LoadFeedData implements FixtureInterface
         $feed->setLink('http://php.net/feed.atom');
         $feed->setTitle('PHP : Hypertext Preprocessor');
         $feed->setType(Feed::TYPE_EXTERNAL);
-        $feed->setLastModified(new \DateTime('@0'));
+        $feed->setLastModified(new \DateTime());
         
         $manager->persist($feed); 
         $manager->flush(); 
