@@ -4,14 +4,20 @@ namespace Debril\FeedIoBundle\Tests\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
-class StreamControllerTest extends WebTestCase
+class StreamControllerTest extends WebDbTestCase
 {
+
+    public function setUp()
+    {
+        parent::setUp();
+        self::runCommand('doctrine:fixtures:load -n');
+    }
 
     public function testIndex()
     {
         $client = static::createClient();
 
-        $client->request('GET', '/mock/rss');
+        $client->request('GET', '/rss/1');
 
         $response = $client->getResponse();
         $this->assertEquals('200', $response->getStatusCode());
@@ -27,7 +33,7 @@ class StreamControllerTest extends WebTestCase
         $this->assertGreaterThan(0, strlen($response->getContent()));
         $this->assertTrue($response->isCacheable());
 
-        $client->request('GET', '/mock/rss', array(), array(), array('HTTP_If-Modified-Since' => $lastModified->format(\DateTime::RSS)));
+        $client->request('GET', '/rss/1', array(), array(), array('HTTP_If-Modified-Since' => $lastModified->format(\DateTime::RSS)));
         $response2 = $client->getResponse();
 
         $this->assertEquals('304', $response2->getStatusCode());
@@ -41,7 +47,7 @@ class StreamControllerTest extends WebTestCase
     {
         $client = static::createClient();
 
-        $client->request('GET', '/mock/rss/not-found');
+        $client->request('GET', '/rss/not-found');
         
         $this->assertEquals(404, $client->getResponse()->getStatusCode());
     }
