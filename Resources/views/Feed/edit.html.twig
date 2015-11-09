@@ -3,5 +3,9 @@
 {% block title %}DebrilFeedIoBundle:Feed:edit{% endblock %}
 
 {% block main %}
-<h1>Welcome to the Feed:edit page</h1>
+
+{{ form_start(form) }}
+{{ form_widget(form) }}
+{{ form_end(form) }}
+
 {% endblock %}
