@@ -14,7 +14,8 @@ class AppKernel extends Kernel
             // Dependencies
             new Symfony\Bundle\FrameworkBundle\FrameworkBundle(),
             new Symfony\Bundle\TwigBundle\TwigBundle(),
-            new Doctrine\Bundle\DoctrineBundle\DoctrineBundle(),
+            new Doctrine\Bundle\DoctrineBundle\DoctrineBundle(), 
+            new Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle(),
             // My Bundle to test
             new Debril\FeedIoBundle\DebrilFeedIoBundle(),
         );
