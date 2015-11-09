@@ -7,14 +7,12 @@ class FeedControllerTest extends WebDbTestCase
     public function testAdd()
     {
         $client = static::createClient();
-#var_dump($client->getContainer());
         $crawler = $client->request('GET', '/feed/add');
         
         $this->assertEquals(200, $client->getResponse()->getStatusCode(), "Unexpected HTTP status code for GET /feed/add");
         
         $form = $crawler->selectButton('Add')->form(array(
             'debril_feediobundle_feed_external[link]'  => __DIR__ . '/../../Resources/samples/sample-atom.xml',
-            // ... other fields to fill
         ));
         
         $client->submit($form);
@@ -27,32 +25,62 @@ class FeedControllerTest extends WebDbTestCase
         
     }
 
-    public function testNew()
+    public function testNewAndEdit()
     {
         $client = static::createClient();
+        $crawler = $client->request('GET', '/feed/new');     
+        
+        $this->assertEquals(200, $client->getResponse()->getStatusCode(), "Unexpected HTTP status code for GET /feed/new");
+        
+        $form = $crawler->selectButton('Save')->form(array(
+            'debril_feediobundle_feed_published[type]'  => 2,
+            'debril_feediobundle_feed_published[title]'  => 'Test Feed',
+            'debril_feediobundle_feed_published[publicId]'  => '1',
+            'debril_feediobundle_feed_published[comment]'  => 'a comment',
+            'debril_feediobundle_feed_published[description]'  => 'something',
+        ));
+        
+        $client->submit($form);
 
-        $crawler = $client->request('GET', '/feed/new');
-    }
+        $crawler = $client->followRedirect();
+        $content = $client->getResponse()->getContent();
+        
+        $this->assertGreaterThan(0, strpos($content, 'Test Feed'), 'Missing feed title');
+        $this->assertGreaterThan(0, strpos($content, 'a comment'), 'Missing comment');
+        
+        $crawler = $client->click($crawler->selectLink('Edit')->link());
 
-    public function testSave()
-    {
-        $client = static::createClient();
-
-        $crawler = $client->request('GET', '/feed/save');
+        $form = $crawler->selectButton('Save')->form(array(
+            'debril_feediobundle_feed_published[title]'  => 'New Title',            
+            'debril_feediobundle_feed_published[publicId]'  => '1',
+            'debril_feediobundle_feed_published[comment]'  => 'a comment',
+            'debril_feediobundle_feed_published[description]'  => 'something',
+        ));
+         
+        $client->submit($form);
+        $crawler = $client->followRedirect();
+        $content = $client->getResponse()->getContent();
+        
+        $this->assertGreaterThan(0, strpos($content, 'New Title'), 'Wrong feed title');
     }
 
     public function testShow()
     {
+        self::runCommand('doctrine:fixtures:load -n');
         $client = static::createClient();
 
-        $crawler = $client->request('GET', '/feed/show');
-    }
+        $crawler = $client->request('GET', '/feed/1/show');   
+        $this->assertEquals(200, $client->getResponse()->getStatusCode(), "Unexpected HTTP status code for GET /feed/1/show");     
+        $content = $client->getResponse()->getContent();
 
-    public function testEdit()
-    {
-        $client = static::createClient();
+        $this->assertGreaterThan(0, strpos($content, 'PHP'), 'Missing feed title');
+        
+        $crawler = $client->click($crawler->selectLink('RSS')->link());
+        $content = $client->getResponse()->getContent();
 
-        $crawler = $client->request('GET', '/feed/edit');
+        $this->assertEquals(200, $client->getResponse()->getStatusCode(), "Unexpected HTTP status code for GET /rss/1");
+        
+        $this->assertGreaterThan(0, strpos($content, 'PHP'), 'Missing feed title');
     }
 
     public function testIndex()
