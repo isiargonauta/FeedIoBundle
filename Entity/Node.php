@@ -56,13 +56,6 @@ class Node extends \FeedIo\Feed\Node
     protected $link;
 
     /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="lastModified", type="datetime")
-     */
-    protected $lastModified;
-
-    /**
      * @var string
      *
      * @ORM\Column(name="public_id", type="string", length=255, nullable=true)
@@ -185,6 +178,18 @@ class Node extends \FeedIo\Feed\Node
             yield $element->getName();
         }
     }
+    
+    /**
+     * Set createdAt
+     *
+     * @PrePersist
+     *
+     * @return $this
+     */
+    public function setCreatedAt()
+    {
+        $this->createdAt = new \DateTime;
+    }
 
     /**
      * Get createdAt
@@ -219,5 +224,15 @@ class Node extends \FeedIo\Feed\Node
     public function getModifiedAt()
     {
         return $this->modifiedAt;
+    }
+    
+    /**
+     * Get modifiedAt
+     *
+     * @return \DateTime 
+     */
+    public function getLastModified()
+    {
+        return $this->getModifiedAt();
     }
 }
