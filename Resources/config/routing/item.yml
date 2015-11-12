@@ -1,0 +1,15 @@
+item_list:
+    path:     /list/{feedId}
+    defaults: { _controller: DebrilFeedIoBundle:Item:list }
+
+item_new:
+    path:     /new/{feedId}
+    defaults: { _controller: DebrilFeedIoBundle:Item:new }
+
+item_edit:
+    path:     /{id}/edit
+    defaults: { _controller: DebrilFeedIoBundle:Item:edit }
+
+item_delete:
+    path:     /{id}/delete
+    defaults: { _controller: DebrilFeedIoBundle:Item:delete }
