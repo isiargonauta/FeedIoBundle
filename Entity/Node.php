@@ -202,7 +202,7 @@ class Node extends \FeedIo\Feed\Node
      * @PrePersist
      * @PreUpdate
      *
-     * @return Item
+     * @return $this
      */
     public function updateModifiedAt()
     {
