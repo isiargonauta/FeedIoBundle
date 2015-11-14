@@ -3,5 +3,9 @@
 {% block title %}DebrilFeedIoBundle:Item:list{% endblock %}
 
 {% block body %}
-<h1>Welcome to the Item:list page</h1>
+<h1>{{ feed.title }}</h1>
+    {% for item in items  %}
+        <h2>{{ item.title }}</h2>
+        <p>{{ item.description }}</p>
+    {% endfor %}
 {% endblock %}

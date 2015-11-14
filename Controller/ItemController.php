@@ -12,9 +12,11 @@ class ItemController extends Controller
 {
     public function listAction($feedId)
     {
+        $feed = $this->getFeedById($feedId);
         $items = $this->getItemsOfFeed($feedId);
 
         return $this->render('DebrilFeedIoBundle:Item:list.html.twig', array(
+                'feed' => $feed,
                 'items' => $items,
             ));   
     }
