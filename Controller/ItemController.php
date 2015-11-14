@@ -43,7 +43,7 @@ class ItemController extends Controller
         }
         
         return $this->render('DebrilFeedIoBundle:Item:new.html.twig', array(
-                'feed' => $feedInstance,
+                'feed' => $feed,
                 'form' => $form->createView(),
             ));    
     }
