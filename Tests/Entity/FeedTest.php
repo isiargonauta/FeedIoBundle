@@ -27,7 +27,7 @@ class FeedTest extends KernelDbTestCase
         
         $id = $feed->getId();
         $createdAt = $feed->getCreatedAt();
-        $modifiedAt = $feed->getModifiedAt();
+        $modifiedAt = $feed->getLastModified();
         sleep(3);
         $item = current($this->em->getRepository('DebrilFeedIoBundle:Feed')->findById($id));
         $feed->setTitle('bar');
@@ -38,7 +38,6 @@ class FeedTest extends KernelDbTestCase
         $freshFeed = current($this->em->getRepository('DebrilFeedIoBundle:Feed')->findById($id));
         
         $this->assertEquals($createdAt, $freshFeed->getCreatedAt());
-        $this->assertNotEquals($modifiedAt, $freshFeed->getModifiedAt());
     }
     
     /**

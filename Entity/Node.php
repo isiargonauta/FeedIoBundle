@@ -6,15 +6,10 @@ use Doctrine\ORM\Mapping as ORM;
 use FeedIo\Feed\Node\ElementInterface;
 use FeedIo\Feed\Node\ElementIterator;
 
-use Doctrine\ORM\Mapping\HasLifecycleCallbacks;
-use Doctrine\ORM\Mapping\PrePersist;
-use Doctrine\ORM\Mapping\PreUpdate;
-
 /**
  * Node
  *
  * @ORM\MappedSuperclass 
- * @HasLifecycleCallbacks
  */
 class Node extends \FeedIo\Feed\Node
 {
@@ -37,9 +32,9 @@ class Node extends \FeedIo\Feed\Node
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="modified_at", type="datetime")
+     * @ORM\Column(name="last_modified", type="datetime")
      */
-    protected $modifiedAt;
+    protected $lastModified;
     
     /**
      * @var string
@@ -80,6 +75,14 @@ class Node extends \FeedIo\Feed\Node
     {
         parent::__construct();
         $this->createdAt = new \DateTime;
+    }
+    
+    /**
+     * @return \DateTime
+     */
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
     }
     
     /**
@@ -178,61 +181,5 @@ class Node extends \FeedIo\Feed\Node
             yield $element->getName();
         }
     }
-    
-    /**
-     * Set createdAt
-     *
-     * @PrePersist
-     *
-     * @return $this
-     */
-    public function setCreatedAt()
-    {
-        $this->createdAt = new \DateTime;
-    }
 
-    /**
-     * Get createdAt
-     *
-     * @return \DateTime 
-     */
-    public function getCreatedAt()
-    {
-        return $this->createdAt;
-    }
-
-    /**
-     * Set modifiedAt
-     *
-     * @PrePersist
-     * @PreUpdate
-     *
-     * @return $this
-     */
-    public function updateModifiedAt()
-    {
-        $this->modifiedAt = new \DateTime;
-
-        return $this;
-    }
-
-    /**
-     * Get modifiedAt
-     *
-     * @return \DateTime 
-     */
-    public function getModifiedAt()
-    {
-        return $this->modifiedAt;
-    }
-    
-    /**
-     * Get modifiedAt
-     *
-     * @return \DateTime 
-     */
-    public function getLastModified()
-    {
-        return $this->getModifiedAt();
-    }
 }

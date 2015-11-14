@@ -98,6 +98,7 @@ abstract class CrudControllerAbstract extends Controller
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
+            $this->updateLastModified($entity);
             $em->persist($entity);
             $em->flush();
 
@@ -227,6 +228,7 @@ abstract class CrudControllerAbstract extends Controller
         $editForm->handleRequest($request);
 
         if ($editForm->isValid()) {
+            $this->updateLastModified($entity);
             $em->flush();
 
             return $this->redirect($this->generateUrl($this->getEntityRoute('edit'), array('id' => $id)));
@@ -238,6 +240,16 @@ abstract class CrudControllerAbstract extends Controller
             'delete_form' => $deleteForm->createView(),
         ));
     }
+
+    private function updateLastModified($entity)
+    {
+        if ( $entity instanceof \FeedIo\Feed\NodeInterface ) {
+            $entity->setLastModified(new \DateTime);
+        }
+        
+        return $this;
+    }
+
     /**
      * Deletes a entity.
      *

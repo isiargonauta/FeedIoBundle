@@ -26,7 +26,7 @@ class ItemTest extends KernelDbTestCase
         
         $id = $item->getId();
         $createdAt = $item->getCreatedAt();
-        $modifiedAt = $item->getModifiedAt();
+        $modifiedAt = $item->getLastModified();
         sleep(3);
         $item = current($this->em->getRepository('DebrilFeedIoBundle:Item')->findById($id));
         $item->setTitle('bar');
@@ -37,7 +37,6 @@ class ItemTest extends KernelDbTestCase
         $freshItem = current($this->em->getRepository('DebrilFeedIoBundle:Item')->findById($id));
         
         $this->assertEquals($createdAt, $freshItem->getCreatedAt());
-        $this->assertNotEquals($modifiedAt, $freshItem->getModifiedAt());
     }
     
     public function testMedias()
