@@ -18,7 +18,6 @@ class ItemType extends AbstractType
             ->add('publishedAt')
             ->add('title')
             ->add('link')
-            ->add('lastModified')
             ->add('publicId')
             ->add('description')
             ->add('feed')

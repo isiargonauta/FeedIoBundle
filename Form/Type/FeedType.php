@@ -23,7 +23,6 @@ class FeedType extends AbstractType
             ->add('description')
             ->add('title')
             ->add('link')
-            ->add('lastModified')
         ;
     }
     
