@@ -38,6 +38,6 @@ class FeedItemType extends AbstractType
      */
     public function getName()
     {
-        return 'debril_feediobundle_item';
+        return 'debril_feediobundle_feed_item';
     }
 }
