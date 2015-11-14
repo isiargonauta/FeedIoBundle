@@ -2,8 +2,6 @@
 
 namespace Debril\FeedIoBundle\Tests\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
-
 class StreamControllerTest extends WebDbTestCase
 {
 
