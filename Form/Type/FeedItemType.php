@@ -19,7 +19,7 @@ class FeedItemType extends AbstractType
             ->add('title')
             ->add('publicId')
             ->add('description')            
-            ->add('submit', 'submit', array('label' => 'Add'))
+            ->add('submit', 'submit', array('label' => 'Save'))
         ;
     }
     

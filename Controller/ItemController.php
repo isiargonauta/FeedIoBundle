@@ -50,18 +50,51 @@ class ItemController extends Controller
             ));    
     }
 
-    public function editAction()
+    /**
+     * @param Request $request
+     * @param $id
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     */
+    public function editAction(Request $request, $id)
     {
+        $item = $this->getItemById($id);
+
+        if (!$item) {
+            throw $this->createNotFoundException('Unable to find item.');
+        }
+        $form = $this->createForm(new FeedItemType(), $item);
+        $form->handleRequest($request);
+
+        if ( $form->isValid() ) {
+            $feed = $item->getFeed();
+            $this->saveFeed($feed);
+
+            $this->addFlash('notice', "{$item->getTitle()} successfully updated");
+        }
+
         return $this->render('DebrilFeedIoBundle:Item:edit.html.twig', array(
-                // ...
-            ));    }
+                'item' => $item,
+                'form' => $form->createView(),
+            ));
+    }
 
     public function deleteAction()
     {
         return $this->render('DebrilFeedIoBundle:Item:delete.html.twig', array(
                 // ...
             ));    }
-            
+
+    /**
+     * @param $id
+     * @return Item
+     */
+    protected function getItemById($id)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        return $em->getRepository('DebrilFeedIoBundle:Item')->find($id);
+    }
+
     protected function getItemsOfFeed($feed)
     {
         $em = $this->getDoctrine()->getManager();
@@ -80,7 +113,7 @@ class ItemController extends Controller
     }
 
     /**
-     * @param Feed $feed 
+     * @param Feed $feed
      * @return Feed
      */
     protected function saveFeed(Feed $feed)
@@ -91,4 +124,5 @@ class ItemController extends Controller
     
         return $feed;
     }
+
 }
