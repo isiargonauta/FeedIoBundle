@@ -28,6 +28,24 @@ class ItemControllerTest extends WebDbTestCase
         $client = static::createClient();
 
         $crawler = $client->request('GET', '/item/new/1');
+        $this->assertEquals(200, $client->getResponse()->getStatusCode(), "Unexpected HTTP status code for GET /item/new/1");
+
+        $form = $crawler->selectButton('Add')->form(array(
+            'debril_feediobundle_feed_item[publishedAt][date][day]'  => 1,
+            'debril_feediobundle_feed_item[publishedAt][date][month]'  => 1,
+            'debril_feediobundle_feed_item[publishedAt][date][year]'  => 2015,
+            'debril_feediobundle_feed_item[publishedAt][time][hour]'  => 12,
+            'debril_feediobundle_feed_item[publishedAt][time][minute]'  => 0,
+            'debril_feediobundle_feed_item[title]'  => 'item test',
+            'debril_feediobundle_feed_item[publicId]'  => 'item id',
+            'debril_feediobundle_feed_item[description]'  => 'lorem ipsum',
+        ));
+        $client->submit($form);
+
+        $crawler = $client->followRedirect();
+        $content = $client->getResponse()->getContent();
+
+        $this->assertGreaterThan(0, strpos($content, 'item test'), 'missing item title');
 
     }
 
