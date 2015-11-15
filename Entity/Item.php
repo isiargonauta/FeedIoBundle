@@ -41,6 +41,7 @@ class Item extends Node implements ItemInterface
     {
         parent::__construct();
         $this->medias = new ArrayCollection();
+        $this->lastModified = new \DateTime();
     }   
 
     /**
