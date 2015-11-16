@@ -19,7 +19,7 @@ class ItemControllerTest extends WebDbTestCase
         $this->assertEquals(200, $client->getResponse()->getStatusCode(), "Unexpected HTTP status code for GET /item/list/1");
         $content = $client->getResponse()->getContent();
         $this->assertGreaterThan(0, strpos($content, '<h1>PHP : Hypertext Preprocessor</h1>'), 'Missing feed title');
-        $this->assertGreaterThan(0, strpos($content, '<h2>test</h2>'), 'Missing item title');
+        $this->assertGreaterThan(0, strpos($content, '<h2>great test item</h2>'), 'Missing item title');
 
     }
 
@@ -76,7 +76,18 @@ class ItemControllerTest extends WebDbTestCase
     {
         $client = static::createClient();
 
-        $crawler = $client->request('GET', '/delete');
+        $crawler = $client->request('GET', '/item/1/delete');
+
+        $this->assertEquals(200, $client->getResponse()->getStatusCode(), "Unexpected HTTP status code for GET /item/1/delete");        
+        $content = $client->getResponse()->getContent();
+
+        $this->assertGreaterThan(0, strpos($content, 'great test item'), 'missing item title');
+        $client->submit($crawler->selectButton('Delete')->form());        
+        
+        $crawler = $client->followRedirect();
+        $content = $client->getResponse()->getContent();
+
+        $this->assertEquals(0, strpos($content, '<h2>great test item</h2>'), 'item not removed');
     }
 
 }
