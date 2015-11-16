@@ -78,11 +78,29 @@ class ItemController extends Controller
             ));
     }
 
-    public function deleteAction()
+    public function deleteAction(Request $request, $id)
     {
+        $form = $this->createDeleteForm($id);
+        $form->handleRequest($request);
+        $item = $this->getItemById($id);
+        
+        if ($form->isValid()) {
+            $feed = $item->getFeed();
+            $em = $this->getDoctrine()->getManager();
+            
+            $em->remove($item);
+            $em->flush();
+            
+            $this->addFlash('notice', "{$item->getTitle()} successfully removed");
+            
+            return $this->redirect($this->generateUrl('feed_show', array('id' => $feed->getId())));
+        }
+
         return $this->render('DebrilFeedIoBundle:Item:delete.html.twig', array(
-                // ...
-            ));    }
+                'item' => $item,
+                'form' => $form->createView(),
+            ));    
+    }
 
     /**
      * @param $id
@@ -124,5 +142,21 @@ class ItemController extends Controller
     
         return $feed;
     }
-
+    
+    /**
+     * Creates a form to delete an item by id.
+     *
+     * @param mixed $id The item id
+     *
+     * @return \Symfony\Component\Form\Form The form
+     */
+    protected function createDeleteForm($id)
+    {
+        return $this->createFormBuilder()
+            ->setAction($this->generateUrl('item_delete', array('id' => $id)))
+            ->setMethod('DELETE')
+            ->add('submit', 'submit', array('label' => 'Delete'))
+            ->getForm()
+        ;
+    }
 }
