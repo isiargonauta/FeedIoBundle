@@ -3,5 +3,8 @@
 {% block title %}DebrilFeedIoBundle:Item:delete{% endblock %}
 
 {% block body %}
-<h1>Welcome to the Item:delete page</h1>
+<h1>are you sure you want to remove {{item.title}} ?</h1>    
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+    {{ form_end(form) }}
 {% endblock %}
