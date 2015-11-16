@@ -67,7 +67,6 @@ class ItemControllerTest extends WebDbTestCase
             'debril_feediobundle_feed_item[description]'  => 'lorem ipsum',
         ));
         $client->submit($form);
-        #$this->assertEquals(200, $client->getResponse()->getStatusCode(), "Unexpected HTTP status code for GET /item/1/edit");
         $content = $client->getResponse()->getContent();
 
         $this->assertGreaterThan(0, strpos($content, 'great title'), 'item title not updated');
