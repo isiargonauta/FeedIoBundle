@@ -22,7 +22,7 @@ class LoadFeedData implements FixtureInterface
         $feed->setLastModified(new \DateTime());
 
         $item = new Item();
-        $item->setTitle('test');
+        $item->setTitle('great test item');
         $item->setDescription('description');
         $item->setLastModified(new \DateTime());
         $item->setLink('http://some.link');
