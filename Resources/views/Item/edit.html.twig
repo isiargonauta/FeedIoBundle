@@ -1,10 +1,8 @@
 {% extends "DebrilFeedIoBundle::base.html.twig" %}
 
-{% block title %}DebrilFeedIoBundle:Item:edit{% endblock %}
+{% block title -%}edit item{% endblock %}
 
-{% block body %}
-    <h1>Welcome to the Item:edit page</h1>
-
+{% block main -%}
     {{ form_start(form) }}
     {{ form_widget(form) }}
     {{ form_end(form) }}
