@@ -1,8 +1,8 @@
 {% extends "DebrilFeedIoBundle::base.html.twig" %}
 
-{% block title %}DebrilFeedIoBundle:Item:list{% endblock %}
+{% block title -%}edit item{% endblock %}
 
-{% block body %}
+{% block main -%}
 <h1>{{ feed.title }}</h1>
     {% for item in items  %}
         <h2>{{ item.title }}</h2>

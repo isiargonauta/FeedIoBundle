@@ -1,11 +1,11 @@
 {% extends "DebrilFeedIoBundle::base.html.twig" %}
 
-{% block title %}DebrilFeedIoBundle:Item:new{% endblock %}
+{% block title -%}add a new item{% endblock %}
 
-{% block body %}
-<h1>Welcome to the Item:new page</h1>
-
+{% block main -%}
+<h1>new item added to {{ feed.title }}</h1>
 {{ form_start(form) }}
 {{ form_widget(form) }}
 {{ form_end(form) }}
+
 {% endblock %}
