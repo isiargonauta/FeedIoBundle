@@ -52,14 +52,18 @@
         <a href="{{ path('feedio_atom', { 'id': feed.id }) }}">
             Atom
         </a>
-    </li>
-    {% if showUpdateLink %}
+    </li>    
     <li>
+    {% if showUpdateLink %}
         <a href="{{ path('feed_update', { 'id': feed.id }) }}">
             Update feed
         </a>
-    </li>
+    {% else %}        
+        <a href="{{ path('item_new', { 'feedId': feed.id }) }}">
+            add an item to the feed
+        </a>
     {% endif %}
+    </li>
 </ul>
 
 <ul>
