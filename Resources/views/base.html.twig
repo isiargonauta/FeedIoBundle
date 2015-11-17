@@ -16,4 +16,27 @@
 <div class="main">
     {% block main %} {% endblock %}
 </div>
+
+<div class="inner-navigation">    
+    <span>
+        <a href="{{ path('feed_index') }}">
+            view feeds list
+        </a>&nbsp;
+    </span>
+    <span>
+        <a href="{{ path('feed_new') }}">
+            Publish a new feed
+        </a>&nbsp;
+    </span>
+    <span>
+        <a href="{{ path('feed_add') }}">
+            add a new feed to follow
+        </a>&nbsp;
+    </span>
+</div>
+
+<div class="help">
+    {% block help %} {% endblock %}
+</div>
+
 {% endblock %}
