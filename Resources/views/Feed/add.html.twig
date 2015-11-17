@@ -1,9 +1,8 @@
 {% extends "DebrilFeedIoBundle::base.html.twig" %}
 
-{% block title %}DebrilFeedIoBundle:Feed:add{% endblock %}
+{% block title -%}Add a new feed to follow{% endblock %}
+{% block main -%}
 
-{% block main %}
-<h1>Add a new feed to follow</h1>
 {{ form_start(form) }}
 {{ form_widget(form) }}
 {{ form_end(form) }}
