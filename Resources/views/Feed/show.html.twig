@@ -68,9 +68,11 @@
 
 <ul>
 {% for item in items %}
-    <li>
-        {{ item.title }}
-    </li>
+    <div class="feed-item">
+        <h1><a href="{{ path('item_edit', { 'id': item.id }) }}">{{ item.title }}</a></h1>
+        <p>{{ item.description }}</p>
+        <p>{{ feed.lastModified|date('Y-m-d H:i:s') }}</p>
+    </div>
 {% endfor %}
 </ul>
 {% endblock %}
