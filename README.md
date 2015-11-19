@@ -25,6 +25,9 @@ feed-io bundle for the Symfony Framework
 - A generic StreamController built to write all your feeds. This controller is able to send a 304 HTTP Code if the feed didn't change since the last visit
 - A generic StorageInterface to handle read/write operations on a data source
 - Commands to save external feeds' content
+- A data model made of basic entities to store feeds and their items
+- A simple interface to manage feeds
+- A CRUD interface
 
 Keep informed about new releases and incoming features : http://debril.org/category/feed-io
 
@@ -37,7 +40,7 @@ FeedIoBundle is a fork of [rss-atom-bundle](https://github.com/alexdebril/rss-at
 Edit composer.json and add the following line in the "require" section:
 
 ```yaml
-    "debril/feedio-bundle": "dev-master"
+    "debril/feedio-bundle": "~2.0"
 
 ```
 
@@ -78,6 +81,77 @@ feedio:
 
 ```
 
+# database setup
+
+The database is built with Doctrine's standard tools, so its installation is quite easy : 
+
+```bash
+    ./app/console doctrine:schema:create
+
+``` 
+
+If you need some fixtures, you can load them :
+
+```bash
+    ./app/console doctrine:fixtures:load
+
+```
+
+If your application needs to publish RSS and/or Atom feeds you'll need to change feed-io's storage by adding the following lines in app/config/services.yml :
+
+```yaml
+services:
+    feedio.storage:
+        class: Debril\FeedIoBundle\Adapter\DoctrineStorage
+        arguments: ["@doctrine"]
+        
+```
+
+# Main routes
+
+After installing FeedIoBundle in your application, you can discover its main features using PHP's built-in web-server :
+
+```bash
+    ./app/console server:run
+
+``` 
+
+## /feed/
+
+(needs the database to run)
+
+http://127.0.0.1:8000/feed/
+
+It lists all feeds stored in database. You can manage all your feeds starting from there.
+
+## /feed/add
+
+(needs the database to run)
+
+http://127.0.0.1:8000/feed/add
+
+This form allows you to add a new feed to follow
+
+## /feed/new
+
+(needs the database to run)
+
+http://127.0.0.1:8000/feed/new
+
+This form allows you to publish a new feed on the internet
+
+## /rss/{id}
+
+http://127.0.0.1:8000/rss/1
+
+A feed displayed in RSS format
+
+## /atom/{id}
+
+http://127.0.0.1:8000/atom/1
+
+A feed displayed in Atom format
+
 # Fetching the repository
 
 Do this if you want to contribute (and you're welcome to do so):
@@ -92,8 +166,8 @@ You can run the unit test suites using the following command in the Bundle's sou
 
     bin/phpunit
 
-Usage
-=====
+# Usage
+
 
 feedio-bundle is designed to read feeds across the internet and to publish your own. Its main class is [FeedIo](https://github.com/alexdebril/feed-io/blob/master/src/FeedIo/FeedIo.php), which is accessible as a service called 'feedio' :
 
@@ -140,7 +214,7 @@ $dom = $feedIo->format($feed, 'atom');
 ```
 
 ## Providing feeds using the StreamController
-----------------
+
 FeedIoBundle offers the ability to provide RSS/Atom feeds. The route will match the following pattern : /{format}/{id}
 
 - {format} must be "rss" or "atom" (or whatever you want if you add the according routing rule in routing.yml)
@@ -168,8 +242,8 @@ parameters:
 
 This way, the `StreamController` will always display your feed's content and return a 200 HTTP code.
 
-Private feeds
--------------
+# Private feeds
+
 
 You may have private feeds, user-specific or behind some authentication.  
 In that case, you don't want to `Cache-Control: public` header to be added, not to have your feed cached by a reverse-proxy (such as Symfony2 AppCache or Varnish).  
