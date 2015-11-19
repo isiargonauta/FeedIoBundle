@@ -73,14 +73,14 @@ class FeedControllerTest extends WebDbTestCase
         $this->assertEquals(200, $client->getResponse()->getStatusCode(), "Unexpected HTTP status code for GET /feed/1/show");     
         $content = $client->getResponse()->getContent();
 
-        $this->assertGreaterThan(0, strpos($content, 'PHP'), 'Missing feed title');
+        $this->assertGreaterThan(0, strpos($content, 'FeedIoBundle'), 'Missing feed title');
         
         $crawler = $client->click($crawler->selectLink('RSS')->link());
         $content = $client->getResponse()->getContent();
 
         $this->assertEquals(200, $client->getResponse()->getStatusCode(), "Unexpected HTTP status code for GET /rss/1");
         
-        $this->assertGreaterThan(0, strpos($content, 'PHP'), 'Missing feed title');
+        $this->assertGreaterThan(0, strpos($content, 'FeedIoBundle'), 'Missing feed title');
     }
 
     public function testIndex()

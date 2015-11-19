@@ -18,8 +18,8 @@ class ItemControllerTest extends WebDbTestCase
         $crawler = $client->request('GET', '/item/list/1');
         $this->assertEquals(200, $client->getResponse()->getStatusCode(), "Unexpected HTTP status code for GET /item/list/1");
         $content = $client->getResponse()->getContent();
-        $this->assertGreaterThan(0, strpos($content, '<h1>PHP : Hypertext Preprocessor</h1>'), 'Missing feed title');
-        $this->assertGreaterThan(0, strpos($content, '<h2>great test item</h2>'), 'Missing item title');
+        $this->assertGreaterThan(0, strpos($content, '<h1>FeedIoBundle'), 'Missing feed title');
+        $this->assertGreaterThan(0, strpos($content, '<h2>this is the sample feed</h2>'), 'Missing item title');
 
     }
 
@@ -28,7 +28,7 @@ class ItemControllerTest extends WebDbTestCase
         $client = static::createClient();
 
         $crawler = $client->request('GET', '/item/new/1');
-        $this->assertEquals(200, $client->getResponse()->getStatusCode(), "Unexpected HTTP status code for GET /item/new/1");
+        $this->assertEquals(200, $client->getResponse()->getStatusCode(), "Unexpected HTTP status code for GET /item/new/2");
 
         $form = $crawler->selectButton('Save')->form(array(
             'debril_feediobundle_feed_item[publishedAt][date][day]'  => 1,
@@ -81,13 +81,13 @@ class ItemControllerTest extends WebDbTestCase
         $this->assertEquals(200, $client->getResponse()->getStatusCode(), "Unexpected HTTP status code for GET /item/1/delete");        
         $content = $client->getResponse()->getContent();
 
-        $this->assertGreaterThan(0, strpos($content, 'great test item'), 'missing item title');
+        $this->assertGreaterThan(0, strpos($content, 'this is the sample feed'), 'missing item title');
         $client->submit($crawler->selectButton('Delete')->form());        
         
         $crawler = $client->followRedirect();
         $content = $client->getResponse()->getContent();
 
-        $this->assertEquals(0, strpos($content, '<h2>great test item</h2>'), 'item not removed');
+        $this->assertEquals(0, strpos($content, '<h2>this is the sample feed</h2>'), 'item not removed');
     }
 
 }
