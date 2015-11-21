@@ -8,7 +8,6 @@
             <tr>
                 <th>Publishedat</th>
                 <th>Createdat</th>
-                <th>Modifiedat</th>
                 <th>Id</th>
                 <th>Title</th>
                 <th>Link</th>
@@ -23,7 +22,6 @@
             <tr>
                 <td><a href="{{ path('crud_item_show', { 'id': entity.id }) }}">{{ entity.publishedAt|date('Y-m-d H:i:s') }}</a></td>
                 <td>{% if entity.createdAt %}{{ entity.createdAt|date('Y-m-d H:i:s') }}{% endif %}</td>
-                <td>{% if entity.modifiedAt %}{{ entity.modifiedAt|date('Y-m-d H:i:s') }}{% endif %}</td>
                 <td>{{ entity.id }}</td>
                 <td>{{ entity.title }}</td>
                 <td>{{ entity.link }}</td>
