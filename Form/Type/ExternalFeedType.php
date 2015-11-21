@@ -15,7 +15,7 @@ class ExternalFeedType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('link')
+            ->add('url')
             ->add('submit', 'submit', array('label' => 'Add'))
         ;
     }

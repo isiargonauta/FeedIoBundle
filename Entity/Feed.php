@@ -51,6 +51,13 @@ class Feed extends Node implements FeedInterface
      * @var ArrayCollection $items
      */
     protected $items;
+        
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="url", type="text", nullable=true)
+     */
+    protected $url;
     
     protected $itemIterator;
     
@@ -73,7 +80,26 @@ class Feed extends Node implements FeedInterface
     {
         return $this->getTitle();
     }
-    
+        
+    /**
+     * @return string $url
+     */
+    public function getUrl()
+    {
+        return $this->url;
+    }
+
+    /**
+     * @param string $url
+     * @return $this
+     */
+    public function setUrl($url)
+    {
+        $this->url = $url;
+        
+        return $this;
+    }
+
     /**
      * Get a new Item instance
      *

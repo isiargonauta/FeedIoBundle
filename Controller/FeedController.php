@@ -172,7 +172,7 @@ class FeedController extends Controller
      */
     protected function updateFeed(Feed $feed)
     {
-        $this->getFeedIo()->read($feed->getLink(), $feed, $feed->getLastModified());
+        $this->getFeedIo()->read($feed->getUrl(), $feed, $feed->getLastModified());
 
         return $this->saveFeed($feed);
     }

@@ -12,7 +12,7 @@ class FeedControllerTest extends WebDbTestCase
         $this->assertEquals(200, $client->getResponse()->getStatusCode(), "Unexpected HTTP status code for GET /feed/add");
         
         $form = $crawler->selectButton('Add')->form(array(
-            'debril_feediobundle_feed_external[link]'  => __DIR__ . '/../../Resources/samples/sample-atom.xml',
+            'debril_feediobundle_feed_external[url]'  => __DIR__ . '/../../Resources/samples/sample-atom.xml',
         ));
         
         $client->submit($form);
