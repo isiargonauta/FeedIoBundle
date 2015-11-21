@@ -46,8 +46,20 @@ class LoadFeedData implements FixtureInterface
         $feed->setLink('http://php.net/feed.atom');
         $feed->setTitle('PHP : Hypertext Preprocessor');
         $feed->setType(Feed::TYPE_EXTERNAL);
-        $feed->setLastModified(new \DateTime());
-
+        $feed->setLastModified(new \DateTime('-1 year'));
+        
+        $feed = new Feed();
+        $feed->setLink('https://github.com/alexdebril.atom');
+        $feed->setTitle('alexdebril');
+        $feed->setType(Feed::TYPE_EXTERNAL);
+        $feed->setLastModified(new \DateTime('-1 year'));
+        
+        $feed = new Feed();
+        $feed->setLink('http://www.debian.org/News/news');
+        $feed->setTitle('debian.org');
+        $feed->setType(Feed::TYPE_EXTERNAL);
+        $feed->setLastModified(new \DateTime('-1 year'));
+        
         $manager->persist($feed); 
         $manager->flush(); 
     }
