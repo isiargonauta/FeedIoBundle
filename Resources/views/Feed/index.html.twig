@@ -12,6 +12,7 @@
                 <th>Description</th>
                 <th>Id</th>
                 <th>Title</th>
+                <th>URL</th>
                 <th>Link</th>
                 <th>Lastmodified</th>
                 <th>Actions</th>
@@ -26,7 +27,8 @@
                 <td>{{ feed.publicId }}</td>
                 <td>{{ feed.description }}</td>
                 <td>{{ feed.id }}</td>
-                <td>{{ feed.title }}</td>
+                <td>{{ feed.title }}</td>                
+                <td>{{ feed.url }}</td>
                 <td>{{ feed.link }}</td>
                 <td>{% if feed.lastModified %}{{ feed.lastModified|date('Y-m-d H:i:s') }}{% endif %}</td>
                 <td>
