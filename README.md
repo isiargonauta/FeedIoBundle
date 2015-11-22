@@ -58,7 +58,7 @@ Alternatively, add the dependence using command line :
 
 ``` 
 
-Now you need to include the bundle into your project's configuration. First, edit your app/AppKernel.php to register the bundle in the registerBundles() method as above:
+Now you need to include the bundle into your project's configuration. First, edit your app/AppKernel.php to register the bundle and its dependencies in the registerBundles() method as above:
 
 ```php
 class AppKernel extends Kernel
@@ -71,6 +71,9 @@ class AppKernel extends Kernel
             // ...
             // register the bundle here
             new Debril\FeedIoBundle\DebrilFeedIoBundle(),
+            // and its dependencies
+            new Ivory\CKEditorBundle\IvoryCKEditorBundle(),
+            new Symfony\Bundle\MonologBundle\MonologBundle(),
 ```
 
 Then add the bundle's routing configuration in app/config/routing.yml :
