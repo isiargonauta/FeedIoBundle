@@ -16,6 +16,7 @@ class AppKernel extends Kernel
             new Symfony\Bundle\TwigBundle\TwigBundle(),
             new Doctrine\Bundle\DoctrineBundle\DoctrineBundle(), 
             new Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle(),
+            new Ivory\CKEditorBundle\IvoryCKEditorBundle(),
             // My Bundle to test
             new Debril\FeedIoBundle\DebrilFeedIoBundle(),
         );
