@@ -38,6 +38,9 @@ class FeedItemType extends AbstractType
                             array(
                                 'name' => 'tools',
                                 'items' => array('Maximize', 'ShowBlocks', '-', 'About'), ),
+                            array(
+                                'name' => 'documents',
+                                'items' => array('Source'), ),
                         ),
                     ),
                 )
