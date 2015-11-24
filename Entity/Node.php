@@ -178,7 +178,7 @@ class Node extends \FeedIo\Feed\Node
     public function listElements()
     {
         foreach ($this->getAllElements() as $element) {
-            yield $element->getName();
+            yield ($element->getName());
         }
     }
 
